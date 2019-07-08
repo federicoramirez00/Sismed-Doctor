@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!--<meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
+    <title>SISMED</title>
+</head>
+
+<body class="blue lighten-4">
+    <div class="app">
+        <div class="container indigo lighten-4">
+            <div class="row">
+                <h4 class="text-align center-align"><b>SISMED</b></h4>
+                <p class="flow-text text-align center-align"><b>Iniciar sesión</b></p>
+                <form class="col s12 m6" method="post">
+                    <div class="row">
+                        <div class="input-field col s12 offset-m6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="icon_prefix" type="text" class="validate" required>
+                            <label for="icon_prefix">Nombre de usuario</label>
+                        </div>
+                        <div class="input-field col s12 offset-m6">
+                            <i class="material-icons prefix">lock</i>
+                            <input id="icon_prefix" type="password" class="validate" required>
+                            <label for="icon_prefix">Contraseña</label>
+                        </div>
+                        <div class="col s12 offset-m6 center-align">
+                            <button class="btn waves-effect waves-light" name="action" href="dashboard.html">Iniciar sesión</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/materialize.min.js"></script>
+    <script src="../www/js/init.js"></script>
+</body>
+
+</html>
