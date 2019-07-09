@@ -38,8 +38,6 @@
     <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
     <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
-    <link rel="stylesheet" type="text/css" href="../www/css/Chart.min.css">
-    <link rel="stylesheet" type="text/css" href="../www/css/estilos.css">
     <title>SISMED</title>
 </head>
 
@@ -70,7 +68,7 @@
                         </ul>
                     </div>
                 </nav>
-                <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
+                <ul class="sidenav" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
@@ -85,60 +83,66 @@
                 </ul>
             </div>
             <div class="content">
-                <div class="container-fluid">
-                    <div class="parallax-container">
-                        <div class="parallax"><img src="../www/img/img.jpg"></div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <div class="container">
-                            <h4 class="text-align center-align indigo accent-1 white-text">¡Bienvenido Dr. Federico
-                                Ramírez!</h4>
-                        </div>
-                    </div>
-                </div>
                 <div class="container">
                     <div class="row">
-                        <div class="container-fluid">
-                        </div>
-                        <div class="col s12 m6">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="img/consulta.jpg">
-                                    <span class="card-title white-text text-darken-4"></span>
-                                </div>
-                                <div class="card-content indigo white-text">
-                                    <span class="card-title"><strong>Clínica Dra. Alma Rocío</strong></span>
-                                    <p>En nuestra clínica, todo el equipo de doctores nos preocupamos por tu salud y
-                                        brindamos el mejor servicio con la mejor disposición hacia nuestros pacientes.
-                                    </p>
-                                </div>
-                                <div class="card-action indigo">
-                                    <a href="#">This is a link</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m6">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="../www/img/doctores.png">
-                                    <span class="card-title white-text text-darken-4"></span>
-                                </div>
-                                <div class="card-content indigo white-text">
-                                    <span class="card-title"><strong>8</strong></span>
-                                    <p>Citas programadas para hoy.</p>
-                                </div>
-                                <div class="card-action indigo">
-                                    <a href="../www/citas.html">Ver todas las citas</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                        <h5 class="text-align center-align"><b>Horarios disponibles</b></h5>
+                        <br>
+                        <table class="striped responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Día</th>
+                                    <th>Hora inicio</th>
+                                    <th>Hora fin</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
 
-                        <h4 class="text-align center-align">Citas atendidas</h4>
-                        <canvas id="myChart" class="col s12"></canvas>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Lunes</td>
+                                    <td>08:00</td>
+                                    <td>12:30</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
+                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
+                                                class="material-icons">edit</i></button>
+                                        <button class="waves-effect waves-light btn red"><i
+                                                class="material-icons">delete</i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Martes</td>
+                                    <td>08:00</td>
+                                    <td>16:00</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
+                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
+                                                class="material-icons">edit</i></button>
+                                        <button class="waves-effect waves-light btn red"><i
+                                                class="material-icons">delete</i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Jonathan</td>
+                                    <td>09:00</td>
+                                    <td>15:45</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
+                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
+                                                class="material-icons">edit</i></button>
+                                        <button class="waves-effect waves-light btn red"><i
+                                                class="material-icons">delete</i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="fixed-action-btn">
+                        <a class="btn-floating btn-large green accent-4 btn modal-trigger btn tooltipped"
+                            data-target="modal1" data-position="left" data-tooltip="Agregar horario">
+                            <i class="large material-icons">add</i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -155,16 +159,15 @@
                                 <blockquote>
                                     <p class="grey-text text-lighten-4">alma_rocio@sismed.com</p>
                                 </blockquote>
-                            </div>
-                            <div class="col l4 offset-l2 s12">
-                                <h5 class="white-text">Soporte técnico</h5>
-                                <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
-                                <blockquote>
-                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
-                                </blockquote>
                                 <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
                                 <blockquote>
                                     <p class="grey-text text-lighten-4">(503) 2245-5455</p>
+                                </blockquote>
+                            </div>
+                            <div class="col l4 offset-l2 s12">
+                                <p class="grey-text text-lighten-4"><b>Soporte técnico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
                                 </blockquote>
                             </div>
                         </div>
@@ -178,12 +181,59 @@
             </div>
         </div>
     </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <form class="col s12">
+                <img class="materialboxed center-align" width="150" height="150" src="../www/img/descarga.jpg">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input placeholder="Nombre" id="first_name" type="text" class="validate" value="Federico">
+                        <label for="first_name">Nombres</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input id="last_name" type="text" class="validate" value="Ramírez">
+                        <label for="last_name">Apellidos</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" value="federico_ramirez@sismed.com" class="validate">
+                        <label for="email">Correo electrónico</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input value="federamirez" id="direccion" type="text" class="validate">
+                        <label for="usuario">Nombre de usuario</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="fecha" type="date" value="2000-08-29" class="validate">
+                        <label for="fecha">Fecha de nacimiento</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn indigo">
+                            <span><i class="material-icons">add_a_photo</i></span>
+                            <input type="file" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Selecciona una foto">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
+            <a class="modal-close waves-effect waves-light btn green"><i class="material-icons">check</i></a>
+        </div>
+    </div>
     <script src="../www/js/jquery-2.2.3.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
-    <script src="../www/js/Chart.min.js"></script>
-    <script src="../www/js/Chart.bundle.min.js"></script>
     <script src="../www/js/init.js"></script>
-    <script src="../www/js/grafico.js"></script>
 </body>
 
 </html>

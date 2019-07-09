@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!--<meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
+    <title>SISMED</title>
+</head>
+
+<body>
+    <div class="app">
+        <div class="page">
+            <div class="header">
+                <nav class="indigo darken-2">
+                    <div class="nav-wrapper">
+                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
+                            </li>
+                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
+                            </li>
+                            <li><a href="../www/pacientes.html"><i
+                                        class="material-icons left">accessibility</i>Pacientes</a></li>
+                            <li><a href="../www/disponibilidad.html"><i
+                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
+                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
+                            </li>
+                            <li><a href="../www/notificaciones.html"><i
+                                        class="material-icons left">notifications</i><span class="new badge red"
+                                        data-badge-caption="notificaciones">4</span></a></li>
+                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
+                    <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
+                    <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
+                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
+                            disponibles</a></li>
+                    <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
+                    <li><a href="../www/notificaciones.html"><i
+                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
+                                data-badge-caption="">4</span></a></li>
+                    <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <h5 class="text-align center-align"><b>Mis citas programadas</b></h5>
+                        <br>
+                        <table class="striped responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Id Cita</th>
+                                    <th>Foto paciente</th>
+                                    <th>Nombre paciente</th>
+                                    <th>Apellido paciente</th>
+                                    <th>Edad</th>
+                                    <th>Fecha cita</th>
+                                    <th>Hora cita</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="../www/img/photo.jpg" class="materialboxed" width="100" height="100">
+                                    <td>Alvin</td>
+                                    <td>Eclair</td>
+                                    <td>54</td>
+                                    <td>09/07/2019</td>
+                                    <td>10:30</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                            data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                class="material-icons">assignment</i></button>
+                                        <button class="waves-effect waves-light btn red btn tooltipped"
+                                            data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                class="material-icons">close</i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><img src="../www/img/foto.jpg" class="materialboxed" width="100" height="100">
+                                    <td>Alan</td>
+                                    <td>Jellybean</td>
+                                    <td>37</td>
+                                    <td>09/07/2019</td>
+                                    <td>14:00</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                            data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                class="material-icons">assignment</i></button>
+                                        <button class="waves-effect waves-light btn red btn tooltipped"
+                                            data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                class="material-icons">close</i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><img src="../www/img/desc.jpg" class="materialboxed" width="100" height="100">
+                                    <td>Jonathan</td>
+                                    <td>Lollipop</td>
+                                    <td>19</td>
+                                    <td>10/07/2019</td>
+                                    <td>08:15</td>
+                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                            data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                class="material-icons">assignment</i></button>
+                                        <button class="waves-effect waves-light btn red btn tooltipped"
+                                            data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                class="material-icons">close</i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                            <h5 class="text-align center-align"><b>Consultas finalizadas</b></h5>
+                            <br>
+                            <table class="striped responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>Id Cita</th>
+                                        <th>Foto paciente</th>
+                                        <th>Nombre paciente</th>
+                                        <th>Apellido paciente</th>
+                                        <th>Edad</th>
+                                        <th>Fecha cita</th>
+                                        <th>Hora cita</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><img src="../www/img/photo.jpg" class="materialboxed" width="100" height="100">
+                                        <td>Alvin</td>
+                                        <td>Eclair</td>
+                                        <td>54</td>
+                                        <td>09/07/2019</td>
+                                        <td>10:30</td>
+                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                    class="material-icons">assignment</i></button>
+                                            <button class="waves-effect waves-light btn red btn tooltipped"
+                                                data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                    class="material-icons">close</i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><img src="../www/img/foto.jpg" class="materialboxed" width="100" height="100">
+                                        <td>Alan</td>
+                                        <td>Jellybean</td>
+                                        <td>37</td>
+                                        <td>09/07/2019</td>
+                                        <td>14:00</td>
+                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                    class="material-icons">assignment</i></button>
+                                            <button class="waves-effect waves-light btn red btn tooltipped"
+                                                data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                    class="material-icons">close</i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><img src="../www/img/desc.jpg" class="materialboxed" width="100" height="100">
+                                        <td>Jonathan</td>
+                                        <td>Lollipop</td>
+                                        <td>19</td>
+                                        <td>10/07/2019</td>
+                                        <td>08:15</td>
+                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
+                                                    class="material-icons">assignment</i></button>
+                                            <button class="waves-effect waves-light btn red btn tooltipped"
+                                                data-position="bottom" data-tooltip="Cancelar cita"><i
+                                                    class="material-icons">close</i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+            <div class="footer">
+                <footer class="page-footer indigo darken-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col l6 s12">
+                                <h5 class="white-text"><b>Contáctanos</b></h5>
+                                <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">contacto@sismed.com</p>
+                                </blockquote>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">alma_rocio@sismed.com</p>
+                                </blockquote>
+                                <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">(503) 2245-5455</p>
+                                </blockquote>
+                            </div>
+                            <div class="col l4 offset-l2 s12">
+                                <p class="grey-text text-lighten-4"><b>Soporte técnico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-copyright">
+                        <div class="container">
+                            © 2019 Derechos reservados a <b><i>influencers</i></b>.
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h4>Consulta</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="text" class="validate" value="Alvin">
+                            <label for="last_name">Nombre paciente</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="text" class="validate" value="Eclair">
+                            <label for="last_name">Apellido paciente</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea2" class="materialize-textarea" data-length="200"></textarea>
+                            <label for="textarea2">Padecimientos presentados</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea2" class="materialize-textarea" data-length="200"></textarea>
+                            <label for="textarea2">Receta </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300" value="124">
+                            <label for="last_name">Peso del paciente</label>
+                            <span class="helper-text" data-error="wrong" data-success="right">Editar únicamente si el
+                                peso ha cambiado</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="200" value="178">
+                            <label for="last_name">Estatura del paciente</label>
+                            <span class="helper-text" data-error="wrong" data-success="right">Editar únicamente si la
+                                estatura ha cambiado</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300" value="98">
+                            <label for="last_name">Presión arterial</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn red darken-2"><i
+                    class="material-icons">close</i></a>
+            <a href="#!" class="modal-close waves-effect waves-green btn green darken-2"><i
+                    class="material-icons left">add</i>Procesar consulta</a>
+        </div>
+    </div>
+    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/materialize.min.js"></script>
+    <script src="../www/js/init.js"></script>
+</body>
+
+</html>

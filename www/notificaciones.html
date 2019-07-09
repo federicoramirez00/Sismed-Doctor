@@ -38,8 +38,6 @@
     <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
     <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
-    <link rel="stylesheet" type="text/css" href="../www/css/Chart.min.css">
-    <link rel="stylesheet" type="text/css" href="../www/css/estilos.css">
     <title>SISMED</title>
 </head>
 
@@ -70,7 +68,7 @@
                         </ul>
                     </div>
                 </nav>
-                <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
+                <ul class="sidenav" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
@@ -85,60 +83,56 @@
                 </ul>
             </div>
             <div class="content">
-                <div class="container-fluid">
-                    <div class="parallax-container">
-                        <div class="parallax"><img src="../www/img/img.jpg"></div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <div class="container">
-                            <h4 class="text-align center-align indigo accent-1 white-text">¡Bienvenido Dr. Federico
-                                Ramírez!</h4>
-                        </div>
-                    </div>
-                </div>
                 <div class="container">
                     <div class="row">
-                        <div class="container-fluid">
-                        </div>
-                        <div class="col s12 m6">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="img/consulta.jpg">
-                                    <span class="card-title white-text text-darken-4"></span>
-                                </div>
-                                <div class="card-content indigo white-text">
-                                    <span class="card-title"><strong>Clínica Dra. Alma Rocío</strong></span>
-                                    <p>En nuestra clínica, todo el equipo de doctores nos preocupamos por tu salud y
-                                        brindamos el mejor servicio con la mejor disposición hacia nuestros pacientes.
-                                    </p>
-                                </div>
-                                <div class="card-action indigo">
-                                    <a href="#">This is a link</a>
-                                </div>
+                        <h5 class="text-align center-align"><b>Notificaciones de citas</b></h5>
+                        <br>
+                        <div class="card col s12 m3">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="../www/img/desc.jpg" height="300">
+                            </div>
+                            <div class="card-action">
+                                <span class="card-title activator grey-text text-darken-4">María Campos<i
+                                        class="material-icons right">more_vert</i></span>
+                                <p>Este paciente desea hacer una cita</p>
+                                <a href="./notificaciones.html" class="waves-effect waves-light btn red">Rechazar
+                                    cita</a>
+                                <a href="../www/citas.html" class="waves-effect waves-light btn green darken-1">Aceptar
+                                    cita</a>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title activator grey-text text-darken-4">María Campos<i
+                                        class="material-icons right">close</i></span>
+                                <p><b>Fecha: </b>09/07/2019</p>
+                                <p><b>Hora: </b>10:50</p>
+                                <p><b>Calificación: </b>4</p>
+                                <p><b>Edad: </b>20</p>
+                                <p><b>Síntomas: </b>Dolor de cabeza</p>
                             </div>
                         </div>
-                        <div class="col s12 m6">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="../www/img/doctores.png">
-                                    <span class="card-title white-text text-darken-4"></span>
-                                </div>
-                                <div class="card-content indigo white-text">
-                                    <span class="card-title"><strong>8</strong></span>
-                                    <p>Citas programadas para hoy.</p>
-                                </div>
-                                <div class="card-action indigo">
-                                    <a href="../www/citas.html">Ver todas las citas</a>
-                                </div>
+                        <div class="card col s12 m3">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="../www/img/foto.jpg" height="300">
+                            </div>
+                            <div class="card-action">
+                                <span class="card-title activator grey-text text-darken-4">Bryan Amaya<i
+                                        class="material-icons right">more_vert</i></span>
+                                <p>Este paciente desea hacer una cita</p>
+                                <a href="./notificaciones.html" class="waves-effect waves-light btn red">Rechazar
+                                    cita</a>
+                                <a href="../www/citas.html" class="waves-effect waves-light btn green darken-1">Aceptar
+                                    cita</a>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title activator grey-text text-darken-4">Bryan Amaya<i
+                                        class="material-icons right">close</i></span>
+                                <p><b>Fecha: </b>09/07/2019</p>
+                                <p><b>Hora: </b>10:50</p>
+                                <p><b>Calificación: </b>4</p>
+                                <p><b>Edad: </b>19</p>
+                                <p><b>Síntomas: </b>Dolor de cabeza</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-
-                        <h4 class="text-align center-align">Citas atendidas</h4>
-                        <canvas id="myChart" class="col s12"></canvas>
                     </div>
                 </div>
             </div>
@@ -180,10 +174,7 @@
     </div>
     <script src="../www/js/jquery-2.2.3.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
-    <script src="../www/js/Chart.min.js"></script>
-    <script src="../www/js/Chart.bundle.min.js"></script>
     <script src="../www/js/init.js"></script>
-    <script src="../www/js/grafico.js"></script>
 </body>
 
 </html>

@@ -33,6 +33,7 @@
         content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
     <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
@@ -40,13 +41,17 @@
     <title>SISMED</title>
 </head>
 
-<body class="blue lighten-4">
+<body>
     <div class="app">
-        <div class="container indigo lighten-4">
+        <nav class="indigo darken-2">
+            <div class="nav-wrapper">
+                <a href="../www/index.html" class="brand-logo">SISMED</a>
+            </div>
+        </nav>
+        <div class="center-align">
             <div class="row">
-                <h4 class="text-align center-align"><b>SISMED</b></h4>
-                <p class="flow-text text-align center-align"><b>Iniciar sesión</b></p>
-                <form class="col s12 m6" method="post">
+                <h5 class="text-align center-align"><b>Iniciar sesión</b></h5>
+                <form class="col s12 m6" action="../www/dashboard.html">
                     <div class="row">
                         <div class="input-field col s12 offset-m6">
                             <i class="material-icons prefix">account_circle</i>
@@ -59,11 +64,34 @@
                             <label for="icon_prefix">Contraseña</label>
                         </div>
                         <div class="col s12 offset-m6 center-align">
-                            <button class="btn waves-effect waves-light" name="action" href="dashboard.html">Iniciar sesión</button>
+                            <button type="submit" class="btn waves-effect waves-light">Iniciar sesión</button>
+                        </div>
+                        <div class="col s12 offset-m6 center-align">
+                            <a class="modal-trigger" href="#modal2">Olvidé mi contraseña</a>
                         </div>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h5 class="text-align center-align">Recuperar contraseña</h5>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" class="validate" required>
+                        <label for="email">Correo electrónico</label>
+                        <span class="helper-text" data-error="wrong" data-success="right">Ingrese el correo electrónico
+                            con el que se registró</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
+            <a class="modal-close waves-effect waves-light btn green"><i
+                    class="material-icons left">vpn_key</i>Recuperar</a>
         </div>
     </div>
     <script src="../www/js/jquery-2.2.3.min.js"></script>

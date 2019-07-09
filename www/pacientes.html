@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!--<meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
+    <title>SISMED</title>
+</head>
+
+<body>
+    <div class="app">
+        <div class="page">
+            <div class="header">
+                <nav class="indigo darken-2">
+                    <div class="nav-wrapper">
+                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
+                            </li>
+                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
+                            </li>
+                            <li><a href="../www/pacientes.html"><i
+                                        class="material-icons left">accessibility</i>Pacientes</a></li>
+                            <li><a href="../www/disponibilidad.html"><i
+                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
+                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
+                            </li>
+                            <li><a href="../www/notificaciones.html"><i
+                                        class="material-icons left">notifications</i><span class="new badge red"
+                                        data-badge-caption="notificaciones">4</span></a></li>
+                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
+                    <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
+                    <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
+                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
+                            disponibles</a></li>
+                    <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
+                    <li><a href="../www/notificaciones.html"><i
+                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
+                                data-badge-caption="">4</span></a></li>
+                    <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <h5 class="text-align center-align"><b>Gestión de pacientes</b></h5>
+                        <br>
+
+                        <table class="striped responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Foto</th>
+                                    <th>Nombre paciente</th>
+                                    <th>Apellido paciente</th>
+                                    <th>Correo electrónico</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha de nacimiento</th>
+                                    <th>Peso</th>
+                                    <th>Estatura</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="../www/img/photo.jpg" class="materialboxed" width="100" height="100">
+                                    </td>
+                                    <td>Alvin</td>
+                                    <td>Eclair</td>
+                                    <td>eclair_alvin@gmail.com</td>
+                                    <td>EA01</td>
+                                    <td>09/07/1989</td>
+                                    <td>124 kg</td>
+                                    <td>178 cm</td>
+                                    <td><i class="material-icons">visibility</i></td>
+                                    <td><button
+                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
+                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
+                                                class="material-icons">autorenew</i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><img src="../www/img/desc.jpg" class="materialboxed" width="100" height="100">
+                                    </td>
+                                    <td>Alan</td>
+                                    <td>Jellybean</td>
+                                    <td>jellybean_alan@gmail.com</td>
+                                    <td>JA01</td>
+                                    <td>09/07/1979</td>
+                                    <td>140 kg</td>
+                                    <td>185 cm</td>
+                                    <td><i class="material-icons">visibility</i></td>
+                                    <td><button
+                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
+                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
+                                                class="material-icons">autorenew</i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><img src="../www/img/foto.jpg" class="materialboxed" width="100" height="100">
+                                    </td>
+                                    <td>Jonathan</td>
+                                    <td>Lollipop</td>
+                                    <td>lollipop_jonathan@gmail.com</td>
+                                    <td>LJ01</td>
+                                    <td>10/07/1996</td>
+                                    <td>85 kg</td>
+                                    <td>180 cm</td>
+                                    <td><i class="material-icons">visibility</i></td>
+                                    <td><button
+                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
+                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
+                                                class="material-icons">autorenew</i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large green accent-4 btn modal-trigger btn tooltipped" data-target="modal1"
+                    data-position="left" data-tooltip="Agregar paciente">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
+            <div class="footer">
+                <footer class="page-footer indigo darken-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col l6 s12">
+                                <h5 class="white-text"><b>Contáctanos</b></h5>
+                                <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">contacto@sismed.com</p>
+                                </blockquote>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">alma_rocio@sismed.com</p>
+                                </blockquote>
+                            </div>
+                            <div class="col l4 offset-l2 s12">
+                                <h5 class="white-text">Soporte técnico</h5>
+                                <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
+                                </blockquote>
+                                <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">(503) 2245-5455</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-copyright">
+                        <div class="container">
+                            © 2019 Derechos reservados a <b><i>influencers</i></b>.
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <form class="col s12">
+                <img class="materialboxed center-align" width="150" height="150" src="../www/img/descarga.jpg">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input placeholder="Nombre" id="first_name" type="text" class="validate" value="Federico">
+                        <label for="first_name">Nombres</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input id="last_name" type="text" class="validate" value="Ramírez">
+                        <label for="last_name">Apellidos</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" value="federico_ramirez@sismed.com" class="validate">
+                        <label for="email">Correo electrónico</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input value="federamirez" id="direccion" type="text" class="validate">
+                        <label for="usuario">Nombre de usuario</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="fecha" type="date" value="2000-08-29" class="validate">
+                        <label for="fecha">Fecha de nacimiento</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn indigo">
+                            <span><i class="material-icons">add_a_photo</i></span>
+                            <input type="file" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Selecciona una foto">
+                        </div>
+                    </div>
+                </div>
+                <div class="switch">
+                    <span>Estado</span>
+                    <label>
+                        <i class="material-icons">visibility_off</i>
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        <i class="material-icons">visibility</i>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
+            <a class="modal-close waves-effect waves-light btn green"><i class="material-icons">check</i></a>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h5 class="text-align center-align">Dar de baja al paciente</h5>
+            <form class="col s12">
+                <div class="switch">
+                    <span>Estado</span>
+                    <label>
+                        <i class="material-icons">visibility</i>
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        <i class="material-icons">visibility_off</i>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
+            <a class="modal-close waves-effect waves-light btn green"><i class="material-icons">check</i></a>
+        </div>
+    </div>
+    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/materialize.min.js"></script>
+    <script src="../www/js/init.js"></script>
+</body>
+
+</html>
