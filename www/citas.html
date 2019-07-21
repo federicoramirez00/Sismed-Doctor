@@ -38,6 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
     <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
+    <link rel="stylesheet" href="../www/css/datatables.min.css">
+    <link rel="stylesheet" href="../www/css/responsive.dataTables.min.css">
     <title>SISMED</title>
 </head>
 
@@ -109,7 +111,10 @@
                                     <td>54</td>
                                     <td>09/07/2019</td>
                                     <td>10:30</td>
-                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
+                                    <td><button class="waves-effect waves-light btn green btn tooltipped modal-trigger"
+                                            data-position="bottom" data-tooltip="Reprogramar cita"
+                                            href="#modal-reprogramar"><i class="material-icons">history</i></button>
+                                        <button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
                                             data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
                                                 class="material-icons">assignment</i></button>
                                         <button class="waves-effect waves-light btn red btn tooltipped"
@@ -150,70 +155,21 @@
                         </table>
                     </div>
                     <div class="row">
-                            <h5 class="text-align center-align"><b>Consultas finalizadas</b></h5>
-                            <br>
-                            <table class="striped responsive-table">
-                                <thead>
-                                    <tr>
-                                        <th>Id Cita</th>
-                                        <th>Foto paciente</th>
-                                        <th>Nombre paciente</th>
-                                        <th>Apellido paciente</th>
-                                        <th>Edad</th>
-                                        <th>Fecha cita</th>
-                                        <th>Hora cita</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><img src="../www/img/photo.jpg" class="materialboxed" width="100" height="100">
-                                        <td>Alvin</td>
-                                        <td>Eclair</td>
-                                        <td>54</td>
-                                        <td>09/07/2019</td>
-                                        <td>10:30</td>
-                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
-                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
-                                                    class="material-icons">assignment</i></button>
-                                            <button class="waves-effect waves-light btn red btn tooltipped"
-                                                data-position="bottom" data-tooltip="Cancelar cita"><i
-                                                    class="material-icons">close</i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><img src="../www/img/foto.jpg" class="materialboxed" width="100" height="100">
-                                        <td>Alan</td>
-                                        <td>Jellybean</td>
-                                        <td>37</td>
-                                        <td>09/07/2019</td>
-                                        <td>14:00</td>
-                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
-                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
-                                                    class="material-icons">assignment</i></button>
-                                            <button class="waves-effect waves-light btn red btn tooltipped"
-                                                data-position="bottom" data-tooltip="Cancelar cita"><i
-                                                    class="material-icons">close</i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><img src="../www/img/desc.jpg" class="materialboxed" width="100" height="100">
-                                        <td>Jonathan</td>
-                                        <td>Lollipop</td>
-                                        <td>19</td>
-                                        <td>10/07/2019</td>
-                                        <td>08:15</td>
-                                        <td><button class="waves-effect waves-light btn indigo btn tooltipped modal-trigger"
-                                                data-position="bottom" data-tooltip="Iniciar consulta" href="#modal2"><i
-                                                    class="material-icons">assignment</i></button>
-                                            <button class="waves-effect waves-light btn red btn tooltipped"
-                                                data-position="bottom" data-tooltip="Cancelar cita"><i
-                                                    class="material-icons">close</i></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h5 class="text-align center-align"><b>Historial de citas realizadas</b></h5>
+                        <br>
+                        <table class="striped responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Id Cita</th>
+                                    <th>Nombre paciente</th>
+                                    <th>Apellido paciente</th>
+                                    <th>Fecha cita</th>
+                                    <th>Hora cita</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-historial"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="footer">
@@ -282,7 +238,8 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300" value="124">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300"
+                                value="124">
                             <label for="last_name">Peso del paciente</label>
                             <span class="helper-text" data-error="wrong" data-success="right">Editar únicamente si el
                                 peso ha cambiado</span>
@@ -290,7 +247,8 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="200" value="178">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="200"
+                                value="178">
                             <label for="last_name">Estatura del paciente</label>
                             <span class="helper-text" data-error="wrong" data-success="right">Editar únicamente si la
                                 estatura ha cambiado</span>
@@ -298,7 +256,8 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300" value="98">
+                            <input id="last_name" type="number" class="validate" minlength="1" maxlength="300"
+                                value="98">
                             <label for="last_name">Presión arterial</label>
                         </div>
                     </div>
@@ -312,9 +271,39 @@
                     class="material-icons left">add</i>Procesar consulta</a>
         </div>
     </div>
+    <div id="modal-reprogramar" class="modal">
+        <div class="modal-content">
+            <h4>Reprogramar cita</h4>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" class="datepicker col s12">
+                            <label for="update_fecha">Reprogramar fecha</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" class="timepicker">
+                            <label for="last_name">Reprogramar hora</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn red darken-2"><i
+                    class="material-icons">close</i></a>
+            <a href="#!" class="modal-close waves-effect waves-green btn green darken-2"><i
+                    class="material-icons left">history</i>Reprogramar</a>
+        </div>
+    </div>
     <script src="../www/js/jquery-2.2.3.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
+    <script src="../www/js/datatables.min.js"></script>
+    <script src="../www/js/dataTables.responsive.min.js"></script>
     <script src="../www/js/init.js"></script>
+    <script src="../controllers/citas.js"></script>
 </body>
 
 </html>
