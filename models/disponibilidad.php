@@ -85,7 +85,7 @@ class Disponibilidad extends Validator
     //Métodos para manejar el CRUD
 	public function readDisponibilidad()
 	{
-		$sql = 'SELECT id_disponibilidad, d.dia, hora_inicio, hora_fin, t.id_doctor FROM disponibilidad t INNER JOIN dias_disponibilidad d ON t.id_dia = d.id_dia WHERE id_doctor = ? ORDER BY d.id_dia, hora_inicio ASC';
+		$sql = 'SELECT t.id_disponibilidad, d.dia, t.hora_inicio, t.hora_fin, t.id_doctor FROM disponibilidad t INNER JOIN dias_disponibilidad d ON t.id_dia = d.id_dia WHERE id_doctor = ? ORDER BY d.id_dia, hora_inicio ASC';
 		$params = array(4);
 		return Database::getRows($sql, $params);
 	}

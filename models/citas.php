@@ -215,7 +215,7 @@ class Citas extends Validator
 	public function getCita()
 	{
 		$sql = 'SELECT c.id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2 ORDER BY fecha_cita DESC';
-		$params = array($this->iddoctor);
+		$params = array($this->idcita);
 		return Database::getRow($sql, $params);
 	}
 
