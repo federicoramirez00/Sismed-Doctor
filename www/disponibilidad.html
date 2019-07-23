@@ -87,7 +87,7 @@
                     <div class="row">
                         <h5 class="text-align center-align"><b>Horarios disponibles</b></h5>
                         <br>
-                        <table class="striped responsive-table">
+                        <table id="tabla-disponibilidad">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -97,45 +97,7 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Lunes</td>
-                                    <td>08:00</td>
-                                    <td>12:30</td>
-                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
-                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
-                                                class="material-icons">edit</i></button>
-                                        <button class="waves-effect waves-light btn red"><i
-                                                class="material-icons">delete</i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Martes</td>
-                                    <td>08:00</td>
-                                    <td>16:00</td>
-                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
-                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
-                                                class="material-icons">edit</i></button>
-                                        <button class="waves-effect waves-light btn red"><i
-                                                class="material-icons">delete</i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Jonathan</td>
-                                    <td>09:00</td>
-                                    <td>15:45</td>
-                                    <td><button class="waves-effect waves-light btn indigo btn tooltipped"
-                                            data-target="modal1" data-position="left" data-tooltip="Editar horario"><i
-                                                class="material-icons">edit</i></button>
-                                        <button class="waves-effect waves-light btn red"><i
-                                                class="material-icons">delete</i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody id="tbody-disponibilidad"></tbody>
                         </table>
                     </div>
                     <div class="fixed-action-btn">

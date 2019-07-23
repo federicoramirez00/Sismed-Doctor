@@ -12,12 +12,12 @@ class Citas extends Validator
     private $edadp = null;
     private $calificacionp = null;
     private $foto = null;
-    private $ruta = '../../www/img'
+    private $ruta = '../../www/img';
 
     public function setIdCita($value)
 	{
 		if ($this->validateId($value)) {
-			$this->idcita = $value;
+			$this->idcita = $value; 
 			return true;
 		} else {
 			return false;
@@ -190,16 +190,16 @@ class Citas extends Validator
     }
     
     //Métodos para manejar el CRUD
-	public function readDoctores()
+	public function readCitas()
 	{
-		$sql = 'SELECT id_doctor, nombre_doctor, apellido_doctor, correo_doctor, usuario_doctor, fecha_nacimiento, foto_doctor, es.id_estado, e.id_especialidad, e.nombre_especialidad, es.estado FROM doctores d INNER JOIN especialidad e ON e.id_especialidad = d.id_especialidad INNER JOIN estado_usuarios es ON es.id_estado = d.id_estado  ORDER BY apellido_doctor';
+		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2 ORDER BY fecha_cita DESC';
 		$params = array(null);
 		return Database::getRows($sql, $params);
 	}
 
 	public function searchCitas($value)
 	{
-		$sql = 'SELECT id_doctor, nombre_doctor, apellido_doctor, correo_doctor, usuario_doctor FROM doctores WHERE apellido_doctor LIKE ? OR nombre_doctor LIKE ? ORDER BY apellido_doctor';
+		$sql = 'SELECT id_cita, p.foto_paciente, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado, e.estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente INNER JOIN estado_cita e ON e.id_estado = c.id_estado ORDER BY fecha_cita DESC';
 		$params = array("%$value%", "%$value%");
 		return Database::getRows($sql, $params);
 	}
@@ -214,8 +214,8 @@ class Citas extends Validator
 
 	public function getCita()
 	{
-		$sql = 'SELECT id_doctor, nombre_doctor, apellido_doctor, correo_doctor, usuario_doctor, contrasena_doctor, fecha_nacimiento, foto_doctor, id_estado, id_especialidad FROM doctores WHERE id_doctor = ?';
-		$params = array($this->iddoctor);
+		$sql = 'SELECT c.id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2 ORDER BY fecha_cita DESC';
+		$params = array($this->idcita);
 		return Database::getRow($sql, $params);
 	}
 
@@ -242,15 +242,16 @@ class Citas extends Validator
     
     public function rescheduleCita()   
     {
+		echo('xd');
         $sql = 'UPDATE cita SET fecha_cita = ?, hora_cita = ? WHERE id_cita = ?';
         $params = array($this->fecha, $this->hora, $this->idcita);
         return Database::executeRow($sql, $params);
     }
 
-    public function readCitasRealizadas()
+	public function countCitasDiarias()
 	{
-		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita FROM cita c INNER JOIN pacientes p ON c.id_paciente = p.id_paciente WHERE id_doctor = ? AND c.id_estado = 4 ORDER BY fecha_cita DESC';
-		$params = array($this->iddoctor);
+		$sql = 'SELECT COUNT(id_cita) AS citas FROM cita WHERE fecha_cita = CURRENT_DATE';
+		$params = array($this->idcita);
 		return Database::getRow($sql, $params);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
-require_once('../www/php/db.php');
-require_once('../www/php/validator.php');
+require_once('../db.php');
+require_once('../validator.php');
 require_once('../models/citas.php');
 
 if (isset($_GET['action'])) {
@@ -9,35 +9,18 @@ if (isset($_GET['action'])) {
 	$result = array('status' => 0, 'message' => null, 'exception' => null);
 	if (isset($_SESSION['idUsuario']) || true) {
 		switch ($_GET['action']) {
-			case 'read':
-				if ($result['dataset'] = $cita->readEspecialidad()) {
+			case 'readCita':
+				if ($result['dataset'] = $cita->readCitas()) {
 					$result['status'] = 1;
 				} else {
 					$result['exception'] = 'No hay especialidades registradas';
 				}
-                break;
-            case 'readRealizadas':
-                if ($result['dataset'] = $cita->readCitasRealizadas()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['exception'] = 'No se han realizado citas.';
-                }
-			case 'search':
-				$_POST = $cita->validateForm($_POST);
-				if ($_POST['busqueda'] != '') {
-					if ($result['dataset'] = $cita->searchCitas($_POST['busqueda'])) {
-						$result['status'] = 1;
-						$rows = count($result['dataset']);
-						if ($rows > 1) {
-							$result['message'] = 'Se encontraron ' . $rows . ' coincidencias';
-						} else {
-							$result['message'] = 'Solo existe una coincidencia';
-						}
-					} else {
-						$result['exception'] = 'No hay coincidencias';
-					}
+				break;
+			case 'readRealizadas':
+				if ($result['dataset'] = $cita->readCitasRealizadas()) {
+					$result['status'] = 1;
 				} else {
-					$result['exception'] = 'Ingrese un valor para buscar';
+					$result['exception'] = 'No se han realizado citas.';
 				}
 				break;
 			case 'create':
@@ -58,19 +41,30 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'get':
-				if ($cita->setId($_POST['id_especialidad'])) {
+				if ($cita->setIdCita($_GET['id_cita'])) {
 					if ($result['dataset'] = $cita->getCita()) {
 						$result['status'] = 1;
 					} else {
-						$result['exception'] = 'Especialidad inexistente';
+						$result['exception'] = 'Cita inexistente';
 					}
 				} else {
-					$result['exception'] = 'Especialidad incorrecta';
+					$result['exception'] = 'Cita incorrecta';
+				}
+				break;
+			case 'count':
+				if ($cita->setIdCita($_POST['id_cita'])) {
+					if ($result['dataset'] = $cita->countCitasDiarias()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'Contenido no disponible';
+					}
+				} else {
+					$result['exception'] = 'Cita incorrecto';
 				}
 				break;
 			case 'update':
 				$_POST = $cita->validateForm($_POST);
-				if ($cita->setId($_POST['id_especialidad'])) {
+				if ($cita->setIdCita($_POST['id_especialidad'])) {
 					if ($cita->selectEspecialidad()) {
 						if ($cita->setEspecialidad($_POST['update_nombre'])) {
 							if ($cita->setDescripcion($_POST['update_descripcion'])) {
@@ -92,25 +86,28 @@ if (isset($_GET['action'])) {
 				} else {
 					$result['exception'] = 'Especialidad incorrecta';
 				}
-                break;
-            case 'reschedule':
-                $_POST = $cita->validateForm($_POST);
-                if ($cita->setIdCita($_POST['id_cita'])) {
-                    if ($cita->getCita()) {
-                        if ($cita->setFecha($_POST['update_fecha'])) {
-                            if ($cita->setHora($_POST['update_hora'])) {
-                                if ($cita->rescheduleCita()) {
-                                    $result['status'] = 1;
-                                    $result['message'] = 'Cita reprogramada correctamente';
-                                } else {
-                                    $result['exception'] = 'Operación fallida en la reprogramación de cita';
-                                }
-                            } else {
-                                $result['exception'] = 'Hora incorrecta';
-                            }
-                        }
-                    }
-                }
+				break;
+			case 'reschedule':
+			print_r('si entra');
+				$_POST = $cita->validateForm($_POST);
+				if ($cita->setIdCita($_POST['id_cita'])) {
+					if ($cita->getCita()) {
+						print_r('xd');
+						if ($cita->setFecha($_POST['update_fecha'])) {
+							if ($cita->setHora($_POST['update_hora'])) {
+								if ($cita->rescheduleCita()) {
+									$result['status'] = 1;
+									$result['message'] = 'Cita reprogramada correctamente';
+								} else {
+									$result['exception'] = 'Operación fallida en la reprogramación de cita';
+								}
+							} else {
+								$result['exception'] = 'Hora incorrecta';
+							}
+						}
+					}
+				}
+				break;
 			case 'delete':
 				if ($cita->setId($_POST['id_especialidad'])) {
 					if ($cita->selectEspecialidad()) {
