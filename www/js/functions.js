@@ -67,7 +67,6 @@ function sweetAlert(type, text, url)
 */
 function fillSelect(api, id, selected)
 {
-    console.log(api);
     $.ajax({
         url: api,
         type: 'post',
@@ -78,6 +77,7 @@ function fillSelect(api, id, selected)
         // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
         if (isJSONString(response)) {
             const result = JSON.parse(response);
+            console.log(result);
             // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
             if (result.status) {
                 let content = '';

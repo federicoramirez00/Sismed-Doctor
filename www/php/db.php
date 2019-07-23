@@ -1,5 +1,6 @@
 <?php
 //Clase para realizar las operaciones en la base de datos
+header("Access-Control-Allow-Origin: *");
 class Database
 {
     private static $connection = null;
@@ -14,8 +15,8 @@ class Database
     {
         $server = 'localhost';
         $database = 'sismed';
-        $username = 'influencers';
-        $password = 'Expo2019';
+        $username = 'root';
+        $password = '';
         try {
             @self::$connection = new PDO('mysql:host=' . $server . '; dbname=' . $database . '; charset=utf8', $username, $password);
         } catch (PDOException $error) {
