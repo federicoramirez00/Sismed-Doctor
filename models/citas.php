@@ -214,7 +214,7 @@ class Citas extends Validator
 
 	public function getCita()
 	{
-		$sql = 'SELECT c.id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2 ORDER BY fecha_cita DESC';
+		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2';
 		$params = array($this->idcita);
 		return Database::getRow($sql, $params);
 	}
@@ -253,5 +253,26 @@ class Citas extends Validator
 		$sql = 'SELECT COUNT(id_cita) AS citas FROM cita WHERE fecha_cita = CURRENT_DATE';
 		$params = array($this->idcita);
 		return Database::getRow($sql, $params);
+	}
+
+	public function readPreCitas()
+	{
+		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 1 ORDER BY fecha_cita DESC';
+		$params = array(null);
+		return Database::getRows($sql, $params);
+	}
+
+	public function updateEstado()
+	{
+		$sql = 'UPDATE cita SET id_estado = ? WHERE id_cita = ?';
+		$params = array($this->idestado, $this->idcita);
+		return Database::executeRow($sql, $params);
+	}
+
+	public function updatePreCita()
+	{
+		$sql = 'UPDATE cita SET id_estado = ? WHERE id_cita = ?';
+		$params = array($this->idestado, $this->idcita);
+		return Database::executeRow($sql, $params);
 	}
 }

@@ -133,40 +133,41 @@ function getProducto(id) {
 }
 
 // Función para mostrar formulario con registro a modificar
-function modalUpdate(id)
-{
+function modalUpdate(id) {
     $.ajax({
-        url: apiCita + 'get&id_cita='+id,
+        url: apiCita + 'get',
         type: 'post',
+        data: {
+            id_cita: id
+        },
         datatype: 'json'
     })
-    .done(function(response){
-        // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado consola
-        if (isJSONString(response)) {
-            const result = JSON.parse(response);
-            // Se comprueba si el resultado es satisfactorio para mostrar los valores en el formulario, sino se muestra la excepción
-            if (result.status) {
-                $('#id_cita').val(result.dataset.id_cita);
-                $('#update_fecha').val(result.dataset.fecha_cita);
-                $('#update_hora').val(result.dataset.hora_cita);
-                M.updateTextFields();
-                $('#update-cita').modal('open');
+        .done(function (response) {
+            // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado consola
+            if (isJSONString(response)) {
+                const result = JSON.parse(response);
+                // Se comprueba si el resultado es satisfactorio para mostrar los valores en el formulario, sino se muestra la excepción
+                if (result.status) {
+                    $('#id_cita').val(result.dataset.id_cita);
+                    $('#update_fecha').val(result.dataset.fecha_cita);
+                    $('#update_hora').val(result.dataset.hora_cita);
+                    M.updateTextFields();
+                    $('#update-cita').modal('open');
+                } else {
+                    sweetAlert(2, result.exception, null);
+                }
             } else {
-                sweetAlert(2, result.exception, null);
+                console.log(response);
             }
-        } else {
-            console.log(response);
-        }
-    })
-    .fail(function(jqXHR){
-        // Se muestran en consola los posibles errores de la solicitud AJAX
-        console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
-    });
+        })
+        .fail(function (jqXHR) {
+            // Se muestran en consola los posibles errores de la solicitud AJAX
+            console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+        });
 }
 
 // Función para modificar un registro seleccionado previamente
-$('#form-reprogramar').submit(function()
-{
+$('#form-reprogramar').submit(function () {
     event.preventDefault();
     $.ajax({
         url: apiCita + 'reschedule',
@@ -174,24 +175,24 @@ $('#form-reprogramar').submit(function()
         data: $('#form-reprogramar').serialize(),
         datatype: 'json'
     })
-    .done(function(response){
-        // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
-        if (isJSONString(response)) {
-            const result = JSON.parse(response);
-            // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
-            if (result.status) {
-                $('#update-cita').modal('close');
-                showTable();
-                sweetAlert(1, result.message, null);
+        .done(function (response) {
+            // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+            if (isJSONString(response)) {
+                const result = JSON.parse(response);
+                // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                if (result.status) {
+                    $('#update-cita').modal('close');
+                    showTable();
+                    sweetAlert(1, result.message, null);
+                } else {
+                    sweetAlert(2, result.exception, null);
+                }
             } else {
-                sweetAlert(2, result.exception, null);
+                console.log(response);
             }
-        } else {
-            console.log(response);
-        }
-    })
-    .fail(function(jqXHR){
-        // Se muestran en consola los posibles errores de la solicitud AJAX
-        console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
-    });
+        })
+        .fail(function (jqXHR) {
+            // Se muestran en consola los posibles errores de la solicitud AJAX
+            console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+        });
 })

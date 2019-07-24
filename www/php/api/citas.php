@@ -23,6 +23,45 @@ if (isset($_GET['action'])) {
 					$result['exception'] = 'No se han realizado citas.';
 				}
 				break;
+			case 'readPreCitas':
+				if ($result['dataset'] = $cita->readPreCitas()) {
+					$result['status'] = 1;
+				} else {
+					$result['exception'] = 'No se han reservado citas.';
+				}
+				break;
+			case 'aceptarPreCita':
+				if ($cita->setIdestado(2)) {
+					if ($cita->setIdcita($_POST['id_cita'])) {
+						if ($cita->updatePreCita()) {
+							$result['status'] = 1;
+							$result['exception'] = 'Operación fallida';
+						} else {
+							$result['exception'] = 'Operación fallida';
+						}
+					} else {
+						$result['exception'] = 'Cita incorrecta';
+					}
+				} else {
+					$result['exception'] = 'Estado incorrecto';
+				}
+				break;
+			case 'cancelarPreCita':
+				if ($cita->setIdestado(3)) {
+					if ($cita->setIdcita($_POST['id_cita'])) {
+						if ($cita->updateEstado()) {
+							$result['status'] = 1;
+							$result['exception'] = 'Operación fallida';
+						} else {
+							$result['exception'] = 'Operación fallida';
+						}
+					} else {
+						$result['exception'] = 'Cita incorrecta';
+					}
+				} else {
+					$result['exception'] = 'Estado incorrecto';
+				}
+				break;
 			case 'create':
 				$_POST = $cita->validateForm($_POST);
 				if ($cita->setEspecialidad($_POST['create_especialidad'])) {
@@ -41,7 +80,7 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'get':
-				if ($cita->setIdCita($_GET['id_cita'])) {
+				if ($cita->setIdCita($_POST['id_cita'])) {
 					if ($result['dataset'] = $cita->getCita()) {
 						$result['status'] = 1;
 					} else {
@@ -88,7 +127,7 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'reschedule':
-			print_r('si entra');
+				print_r('si entra');
 				$_POST = $cita->validateForm($_POST);
 				if ($cita->setIdCita($_POST['id_cita'])) {
 					if ($cita->getCita()) {
