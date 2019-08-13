@@ -1,19 +1,14 @@
-//Función para comprobar si una cadena tiene formato JSON
-function isJSONString(string)
+$(document).ready(function()
 {
-    try {
-        if (string != "[]") {
-            JSON.parse(string);
-            return true;
-        } else {
-            return false;
-        }
-    } catch(error) {
-        return false;
-    }
-}
-
-//Función para manejar los mensajes de notificación al usuario
+    showSelectEstadosReport('estado-pedidosreport', null);
+})
+/*
+*   Función para manejar los mensajes de notificación al usuario.
+*
+*   Expects: type (tipo de mensaje), text (texto a mostrar) y url (dirección para enviar).
+*
+*   Returns: ninguno.
+*/
 function sweetAlert(type, text, url)
 {
     switch (type) {
@@ -43,7 +38,6 @@ function sweetAlert(type, text, url)
             closeOnEsc: false
         })
         .then(function(value){
-            console.log(value);
             location.href = url
         });
     } else {
@@ -77,7 +71,6 @@ function fillSelect(api, id, selected)
         // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
         if (isJSONString(response)) {
             const result = JSON.parse(response);
-            console.log(result);
             // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
             if (result.status) {
                 let content = '';
@@ -87,7 +80,7 @@ function fillSelect(api, id, selected)
                 result.dataset.forEach(function(row){
                     value = Object.values(row)[0];
                     text = Object.values(row)[1];
-                    if (value != selected) {
+                    if (row.id_categoria != selected) {
                         content += `<option value="${value}">${text}</option>`;
                     } else {
                         content += `<option value="${value}" selected>${text}</option>`;
@@ -97,6 +90,7 @@ function fillSelect(api, id, selected)
             } else {
                 $('#' + id).html('<option value="">No hay opciones</option>');
             }
+            $('select').formSelect();
         } else {
             console.log(response);
         }
@@ -104,6 +98,56 @@ function fillSelect(api, id, selected)
     .fail(function(jqXHR){
         // Se muestran en consola los posibles errores de la solicitud AJAX
         console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+    });
+}
+
+/*
+*   Función para eliminar un registro seleccionado
+*
+*   Expects: api (ruta del servidor para borrar un registro), id (identificador del registro a eliminar) y file (nombre del arhivo a eliminar).
+*
+*   Returns: ninguno.
+*/
+function confirmDelete(api, id, file)
+{
+    swal({
+        title: 'Advertencia',
+        text: '¿Desea eliminar el registro?',
+        icon: 'warning',
+        buttons: ['Cancelar', 'Aceptar'],
+        closeOnClickOutside: false,
+        closeOnEsc: false
+    })
+    .then(function(value){
+        if (value) {
+            let params = new Object();
+            (file) ? params = {identifier: id, filename: file} : params = {identifier: id};
+            $.ajax({
+                url: api + 'delete',
+                type: 'post',
+                data: params,
+                datatype: 'json'
+            })
+            .done(function(response){
+                // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                    if (result.status) {
+                        showTable();
+                        sweetAlert(1, result.message, null);
+                    } else {
+                        sweetAlert(2, result.exception, null);
+                    }
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function(jqXHR){
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+        }
     });
 }
 
@@ -169,8 +213,7 @@ function lineGraph(canvas, xAxis, yAxis, legend, title)
                 data: yAxis,
                 backgroundColor: colors,
                 borderColor: '#000000',
-                borderWidth: 1,
-                fill: false
+                borderWidth: 1
             }]
         },
         options: {
@@ -348,3 +391,57 @@ function polarAreaGraph(canvas, xAxis, yAxis, legend, title)
         }
     });
 }
+/*
+const apiEstados = '../../core/api/dashboard.php?site=dashboard&action=';
+
+function showSelectEstadosReport(idSelect, value)
+{
+    $.ajax({
+        url: apiEstados + 'selectEstadoPedidosReport',
+        type: 'post',
+        data: null,
+        datatype: 'json'
+    })
+    .done(function(response){
+        //Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+        if (isJSONString(response)) {
+            const result = JSON.parse(response);
+            //Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+            if (result.status) {
+                let content = '';
+                if (!value) {
+                    content += '<option value="" disabled selected>Seleccione una opción</option>';
+                }
+                result.dataset.forEach(function(row){
+                    if (row.IdEstadoPedido != value) {
+                        content += `<option value="${row.IdEstadoPedido}" id="estado-pedidos">${row.TipoEstado}</option>`;
+                    } else {
+                        content += `<option value="${row.IdEstadoPedido}" id="estado-pedidos" selected>${row.TipoEstado}</option>`;
+                    }
+                });
+                $('#' + idSelect).html(content);
+            } else {
+                $('#' + idSelect).html('<option value="">No hay opciones</option>');
+            }
+            $('select').formSelect();
+        } else {
+            console.log(response);
+        }
+    })
+    .fail(function(jqXHR){
+        //Se muestran en consola los posibles errores de la solicitud AJAX
+        console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+    });
+}
+
+/*
+const enviarReporteFechas = () => {
+    let fecha1 = $('#fecha1').val()
+    let fecha2 = $('#fecha2').val()
+    location.href = `../../core/reportes/dashboard/reportePedidosFecha.php?fecha1=${fecha1}&fecha2=${fecha2}`;
+}
+
+const enviarReporteEstados = () => {
+    let estado = $('#estado-pedidosreport').val()
+    location.href = `../../core/reportes/dashboard/reportePedidosEstados.php?estado=${estado}`;
+}*/

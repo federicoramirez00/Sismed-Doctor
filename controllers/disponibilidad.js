@@ -145,8 +145,7 @@ function modalUpdate(id) {
                     $('#id_disponibilidad').val(result.dataset.id_disponibilidad);
                     console.log(apiDias);
                     //fillSelect(apiDias, 'update_dia', result.dataset.id_dia);
-                    showSelectDias('readDias', result.dataset.id_dia);
-                    $('#update_inicio').val(result.dataset.hora_inicio);
+                    showSelectDias('readDias', result.dataset.id_dia);                    $('#update_inicio').val(result.dataset.hora_inicio);
                     $('#update_fin').val(result.dataset.hora_fin);
                     $('#update_descripcion').val(result.dataset.descripcion_producto);
                     M.updateTextFields();
