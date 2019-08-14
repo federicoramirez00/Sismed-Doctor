@@ -39,42 +39,6 @@
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
     <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
     <title>SISMED</title>
-    <!--
-        <script>
-        $(document).ready(function() {
-            $('#form-login').submit(function() {
-                var username = $('#usuario').val();
-                var username = $.trim(username);
-                var password = $('#clave').val();
-                var password = $.trim(password);
-                if (username == '') {
-                    $('.error').html('Por favor, ingrese su nombre de usuario');
-                    return false;
-                }
-                else if (password == '') {
-                    $('.error').html('Por favor, ingrese su contraseña');
-                    return false;
-                }
-                else {
-                    var user = $('[name=usuario]').val();
-                    var pass = $('[name=clave]').val();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'http://localhost/php/login.php',
-                        data: { username: user, password: pass },
-                        success: function (data) {
-                            sweetAlert(1, data.message, 'dashboard.html');
-                        },
-                        error: function () {
-                            alert('¡Error!');
-                        }
-                    });
-                    return false;
-                }
-            });
-        });
-    </script>
-    -->
 </head>
 
 <body>
@@ -87,7 +51,7 @@
         <div class="center-align">
             <div class="row">
                 <h5 class="text-align center-align"><b>Iniciar sesión</b></h5>
-                <form class="col s12 m6" action="../www/dashboard.html">
+                <form class="col s12 m6" id="form-sesion" method="post">
                     <div class="row">
                         <div class="input-field col s12 offset-m6">
                             <i class="material-icons prefix">account_circle</i>
@@ -135,6 +99,7 @@
     <script src="../www/js/sweetalert.min.js"></script>
     <script src="../www/js/init.js"></script>
     <script src="../www/js/functions.js"></script>
+    <script src="../controllers/index.js"></script>
 </body>
 
 </html>

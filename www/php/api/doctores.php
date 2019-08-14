@@ -1,6 +1,6 @@
 <?php
-require_once('../helpers/db.php');
-require_once('../helpers/validator.php');
+require_once('../db.php');
+require_once('../validator.php');
 require_once('../models/doctores.php');
 
 //Se comprueba si existe una acción a realizar, de lo contrario se muestra un mensaje de error
