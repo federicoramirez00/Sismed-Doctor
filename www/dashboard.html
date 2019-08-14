@@ -93,7 +93,8 @@
                         <br>
                         <br>
                         <div class="container">
-                            <h4 class="text-align center-align indigo accent-1 white-text">¡SISMED te da la bienvenida!</h4>
+                            <h4 class="text-align center-align indigo accent-1 white-text">¡SISMED te da la bienvenida!
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -118,12 +119,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="citas"></div>
                     </div>
                     <div class="row">
-
-                        <h4 class="text-align center-align">Citas atendidas</h4>
-                        <canvas id="myChart" class="col s12"></canvas>
+                        <div class="col s12 m6">
+                            <canvas id="chartConsultasFecha"></canvas>
+                        </div>
+                        <div class="col s12 m6">
+                            <canvas id="chartCitasDesempenoDoctor"></canvas>
+                        </div>
+                        <div class="col s12 m6">
+                            <canvas id="chartConsultasMensuales"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,11 +169,12 @@
             </div>
         </div>
     </div>
-    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/jquery-3.3.1.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
     <script src="../www/js/Chart.min.js"></script>
     <script src="../www/js/Chart.bundle.min.js"></script>
     <script src="../www/js/init.js"></script>
+    <script src="../www/js/functions.js"></script>
     <script src="../www/js/grafico.js"></script>
     <script src="../controllers/citas.js"></script>
 </body>
