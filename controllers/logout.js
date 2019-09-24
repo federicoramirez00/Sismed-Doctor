@@ -11,13 +11,13 @@ function logOut()
     })
     .then(function(value){
         if (value) {
-            localStorage.removeItem('id')
-            location.href = 'index.html'
+            localStorage.removeItem('id');
+            location.href = 'index.html';
             //sweetAlert(1, 'Perfil modificado correctamente', 'index.html');
         } else {
             swal({
                 title: 'Enhorabuena',
-                text: 'Continúe con la sesión...',
+                text: 'Continúe con la sesión',
                 icon: 'info',
                 button: 'Aceptar',
                 closeOnClickOutside: false,

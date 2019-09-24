@@ -9,9 +9,8 @@ const apiConsultas = 'http://localhost/php/api/consultas.php?action=';
 
 //Función para la creación del gráfico de las consultas realizadas por mes
 function chartConsultasFecha(){
-
     $.ajax({
-        url: apiConsultas + 'consultasFecha',
+        url: apiConsultas + 'estadisticasCitas&idDoctor='+localStorage.getItem('id'),
         type: 'post',
         data: null,
         datatype: 'json'
@@ -19,7 +18,6 @@ function chartConsultasFecha(){
     .done(function(response){
         if(isJSONString(response)){
             const result = JSON.parse(response);
-            console.log(result);
             if(result.status){
                 //declaración del arreglo para el eje X
                 let fechas = [];
@@ -27,13 +25,13 @@ function chartConsultasFecha(){
                 let cantidad = [];
                 result.dataset.forEach(function(row){
                     //parametros de la base de datos que reciben lo arreglos
-                    fechas.push(row.NombreMes);
-                    cantidad.push(row.CantidadCitas);
+                    fechas.push(row.Hora+':00');
+                    cantidad.push(row.Citas);
 
                 });
                 //determina el tipo de gráfico y los párametros que recibe, id del canva, arreglo para el eje X, arreglo para el eje Y
                 //lectura del dato, y título del gráfico
-                barGraph('chartConsultasFecha', fechas, cantidad, 'Consultas', 'Consultas realizadas')
+                barGraph('chartConsultasFecha', fechas, cantidad, 'Citas', 'Afluencia de citas')
                 
             }else{
                 $('#chartConsultasFecha').remove();
@@ -48,7 +46,7 @@ function chartConsultasFecha(){
 
     });
 }
-
+/*
 function chartCitasEstadoDoctor(){
     $.ajax({
         url: apiConsultas + 'citasEstadoDoctor',
@@ -119,3 +117,4 @@ function chartConsultasMensuales(){
     
     });   
 }
+*/

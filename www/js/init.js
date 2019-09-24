@@ -8,4 +8,5 @@ $(document).ready(function(){
     $('.modal').modal();
     $('.datepicker').datepicker();
     $('.timepicker').timepicker();
+    //M.toast({html: 'I am a toast!', classes: 'rounded'});
 });

@@ -1,8 +1,10 @@
 $(document).ready(function () {
     showTable();
+    countCitas();
+    getProximaCita();
 })
 
-const apiCita = 'http://localhost/php/api/citas.php?action=';
+const apiCitas = 'http://localhost/php/api/citas.php?action=';
 
 //Función para llenar la tabla con los registros
 function fillTable(rows) {
@@ -17,7 +19,7 @@ function fillTable(rows) {
                 <td>${row.apellido_paciente}</td> 
                 <td>${row.fecha_cita}</td>
                 <td>${row.hora_cita}</td>
-                <td>${row.id_estado}</td>
+                <td class="green-text">${row.estado}</td>
                 <td>
                     <a href="#" onclick="modalUpdate(${row.id_cita})" class="green-text tooltipped" data-tooltip="Reprogramar"><i class="material-icons">history</i></a>
                     <a href="#" onclick="confirmDelete(${row.id_cita})" class="red-text tooltipped" data-tooltip="Cancelar"><i class="material-icons">close</i></a>
@@ -58,84 +60,169 @@ function fillTable(rows) {
 }
 
 function showTable() {
-    $.ajax({
-        url: apiCita + 'readCita',
-        type: 'post',
-        data: null,
-        datatype: 'json'
-    })
-        .done(function (response) {
-            // Se verifica si la respuesta de la api es una cadena JSON, sino se muestra el resultado en consola
-            if (isJSONString(response)) {
-                const result = JSON.parse(response);
-                // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
-                if (!result.status) {
-                    sweetAlert(4, result.exception, null);
-                }
-                fillTable(result.dataset);
-            } else {
-                console.log(response);
-            }
+    if (localStorage.getItem('id') != null) {
+        $.ajax({
+            url: apiCitas + 'readCita&idDoctor='+localStorage.getItem('id'),
+            type: 'post',
+            data: null,
+            datatype: 'json'
         })
-        .fail(function (jqXHR) {
-            // Se muestran en consola los posibles errores de la solicitud AJAX
-            console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
-        });
+            .done(function (response) {
+                // Se verifica si la respuesta de la api es una cadena JSON, sino se muestra el resultado en consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                    if (!result.status) {
+                        //sweetAlert(4, result.exception, null);
+                        M.toast({html: 'No hay citas programadas. Dirigite a tus notificaciones', classes: 'rounded'});
+                    }
+                    fillTable(result.dataset);
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function (jqXHR) {
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+    } else {
+        location.href = 'index.html';
+    }
 }
 
-function getProducto(id) {
-    $.ajax({
-        url: api + 'detailProducto',
-        type: 'post',
-        data: {
-            id_cita: id
-        },
-        datatype: 'json'
-    })
-        .done(function (response) {
-            // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
-            if (isJSONString(response)) {
-                const result = JSON.parse(response);
-                // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
-                if (result.status) {
-                    let content = `
-                <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="../www/img/doctores.png">
-                        <span class="card-title white-text text-darken-4"></span>
-                    </div>
-                    <div class="card-content indigo white-text">
-                        <span class="card-title"><strong>${result.dataset.citas}</strong></span>
-                        <p>Citas programadas para hoy.</p>
-                    </div>
-                    <div class="card-action indigo">
-                        <a href="../www/citas.html">Ver todas las citas</a>
-                    </div>
-                </div>
-            </div>
-                `;
-                    $('#title').text('Detalles del producto');
-                    $('#citas').html(content);
-                    $('.tooltipped').tooltip();
-                } else {
-                    $('#title').html('<i class="material-icons small">cloud_off</i><span class="red-text">' + result.exception + '</span>');
-                    $('#catalogo').html('');
-                }
-            } else {
-                console.log(response);
-            }
+function countCitas() {
+    if (localStorage.getItem('id') != null) {
+        $.ajax({
+            url: apiCitas + 'count&idDoctor='+localStorage.getItem('id'),
+            type: 'post',
+            data: null,
+            datatype: 'json'
         })
-        .fail(function (jqXHR) {
-            // Se muestran en consola los posibles errores de la solicitud AJAX
-            console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
-        });
+            .done(function (response) {
+                // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                    if (result.status) {
+                        let content = '';
+                        result.dataset.forEach(function (row) {
+                            content += `
+                                <div class="col s12 m6">
+                                    <div class="card indigo">
+                                        <div class="card-content white-text">
+                                        <span class="card-title"><strong>${row.citas}</strong></span>
+                                        <p>Citas programadas para el día de hoy.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        `;
+                        });
+                        $('#card-citas').html(content);
+                        $('.tooltipped').tooltip();
+                    } else {
+                        swal({
+                            title: 'Aviso',
+                            text: 'No hay nuevas notificaciones de citas',
+                            icon: 'info',
+                            button: 'Aceptar',
+                            closeOnClickOutside: false,
+                            closeOnEsc: false
+                        })
+                        .then(function(value){
+                            if (value) {
+                                location.href = 'citas.html'
+                                //sweetAlert(1, 'Perfil modificado correctamente', 'index.html');
+                            }
+                        });
+                    }
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function (jqXHR) {
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+    } else {
+        location.href = 'index.html';
+    }
+}
+
+function getProximaCita() {
+    if (localStorage.getItem('id') != null) {
+        $.ajax({
+            url: apiCitas + 'getProximaCita&idDoctor='+localStorage.getItem('id'),
+            type: 'post',
+            data: null,
+            datatype: 'json'
+        })
+            .done(function (response) {
+                // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                    if (result.status) {
+                        let content = '';
+                        result.dataset.forEach(function (row) {
+                            if (row.proximaCita != null) {
+                                content += `
+                                <div class="col s12 m6">
+                                    <div class="card indigo">
+                                        <div class="card-content white-text">
+                                        <p>Próxima cita</p>
+                                        <span class="card-title"><strong>${row.proximaCita}</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                        `;
+                            } else {
+                                content += `
+                                <div class="col s12 m6">
+                                    <div class="card indigo">
+                                        <div class="card-content white-text">
+                                        <p>Próxima cita</p>
+                                        <span class="card-title"><strong>No hay citas próximas</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                        `;
+                            }
+                        });
+                        $('#card-proxima').html(content);
+                        $('.tooltipped').tooltip();
+                    } else {
+                        swal({
+                            title: 'Aviso',
+                            text: 'No hay nuevas notificaciones de citas',
+                            icon: 'info',
+                            button: 'Aceptar',
+                            closeOnClickOutside: false,
+                            closeOnEsc: false
+                        })
+                        .then(function(value){
+                            if (value) {
+                                location.href = 'citas.html'
+                                //sweetAlert(1, 'Perfil modificado correctamente', 'index.html');
+                            }
+                        });
+                    }
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function (jqXHR) {
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+    } else {
+        location.href = 'index.html';
+    }
 }
 
 // Función para mostrar formulario con registro a modificar
 function modalUpdate(id) {
     $.ajax({
-        url: apiCita + 'get',
+        url: apiCitas + 'get',
         type: 'post',
         data: {
             id_cita: id
@@ -148,6 +235,8 @@ function modalUpdate(id) {
                 const result = JSON.parse(response);
                 // Se comprueba si el resultado es satisfactorio para mostrar los valores en el formulario, sino se muestra la excepción
                 if (result.status) {
+                    console.log(result);
+                    //$('#form-reprogramar')[0].reset();
                     $('#id_cita').val(result.dataset.id_cita);
                     $('#update_fecha').val(result.dataset.fecha_cita);
                     $('#update_hora').val(result.dataset.hora_cita);
@@ -170,7 +259,7 @@ function modalUpdate(id) {
 $('#form-reprogramar').submit(function () {
     event.preventDefault();
     $.ajax({
-        url: apiCita + 'reschedule',
+        url: apiCitas + 'reschedule',
         type: 'post',
         data: $('#form-reprogramar').serialize(),
         datatype: 'json'

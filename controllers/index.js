@@ -47,7 +47,7 @@ $('#form-sesion').submit(function () {
                 const dataset = JSON.parse(response);
                 //Se comprueba si la respuesta es satisfactoria, sino se muestra la excepción
                 if (dataset.status) {
-                    localStorage.setItem('id', dataset.id)
+                    localStorage.setItem('id', dataset.id);
                     sweetAlert(1, 'Autenticación correcta', 'dashboard.html');
                 } else {
                     if (cont >= 3) {

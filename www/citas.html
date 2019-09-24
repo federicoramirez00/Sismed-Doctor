@@ -41,39 +41,42 @@
     <div class="app">
         <div class="page">
             <div class="header">
-                <nav class="indigo darken-2">
-                    <div class="nav-wrapper">
-                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
-                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
-                                class="material-icons">menu</i></a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
-                            </li>
-                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
-                            </li>
-                            <li><a href="../www/pacientes.html"><i
-                                        class="material-icons left">accessibility</i>Pacientes</a></li>
-                            <li><a href="../www/disponibilidad.html"><i
-                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
-                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
-                            </li>
-                            <li><a href="../www/notificaciones.html"><i
-                                        class="material-icons left">notifications</i><span class="new badge red"
-                                        data-badge-caption="notificaciones">4</span></a></li>
-                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div class="navbar-fixed">
+                    <nav class="indigo darken-2">
+                        <div class="nav-wrapper">
+                            <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                    class="material-icons">menu</i></a>
+                            <a id="nav"></a>
+                            <ul class="right hide-on-med-and-down">
+                                <li><a href="../www/dashboard.html"><i
+                                            class="material-icons left">dashboard</i>Inicio</a>
+                                </li>
+                                <li><a href="../www/citas.html"><i
+                                            class="material-icons left">local_hospital</i>Citas</a>
+                                </li>
+                                <li><a href="../www/pacientes.html"><i
+                                            class="material-icons left">accessibility</i>Pacientes</a></li>
+
+                                <li><a href="../www/perfil.html"><i
+                                            class="material-icons left">account_box</i>Perfil</a>
+                                </li>
+                                <li><a href="../www/notificaciones.html"><i
+                                            class="material-icons left">notifications</i><span class="new badge red"
+                                            data-badge-caption="notificaciones">4</span></a></li>
+                                <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
-                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
-                            disponibles</a></li>
+
                     <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
-                    <li><a href="../www/notificaciones.html"><i
-                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
-                                data-badge-caption="">4</span></a></li>
+
                     <li><a href="#" onclick="logOut()"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
                     </li>
                 </ul>
@@ -99,6 +102,12 @@
                         </table>
                     </div>
                 </div>
+                <div class="fixed-action-btn">
+                    <a class="btn-floating btn-large green accent-4 btn modal-trigger btn tooltipped"
+                        data-target="modal-create" data-position="left" data-tooltip="Agendar cita">
+                        <i class="large material-icons">add</i>
+                    </a>
+                </div>
             </div>
             <div class="footer">
                 <footer class="page-footer indigo darken-2">
@@ -118,28 +127,23 @@
                                     <p class="grey-text text-lighten-4">(503) 2245-5455</p>
                                 </blockquote>
                             </div>
-                            <div class="col l4 offset-l2 s12">
-                                <p class="grey-text text-lighten-4"><b>Soporte técnico</b></p>
-                                <blockquote>
-                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
-                                </blockquote>
-                            </div>
+
                         </div>
                     </div>
                     <div class="footer-copyright">
                         <div class="container">
-                            © 2019 Derechos reservados a <b><i>influencers</i></b>.
+                            ©<b><i> SISMED</i></b> Derechos reservados.
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
     </div>
-    <div id="modal2" class="modal">
+    <div id="modal-create" class="modal">
         <div class="modal-content">
             <h4>Consulta</h4>
             <div class="row">
-                <form class="col s12">
+                <form id="form-create" class="col s12">
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="last_name" type="text" class="validate" value="Alvin">
@@ -204,16 +208,16 @@
             <h4>Reprogramar cita</h4>
             <div class="row">
                 <form method="post" id="form-reprogramar">
-                    <input type="text" id="id_cita" name="id_cita">
+                    <input type="hidden" id="id_cita" name="id_cita">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input type="text" id="update_fecha" name="update_fecha" class="datepicker col s12">
+                            <input type="date" id="update_fecha" name="update_fecha" min="" max="" validate>
                             <label for="update_fecha">Reprogramar fecha</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input type="text" id="update_hora" name="update_hora" class="timepicker">
+                            <input type="time" id="update_hora" name="update_hora" min="07:00" validate>
                             <label for="update_hora">Reprogramar hora</label>
                         </div>
                     </div>
@@ -229,12 +233,15 @@
     </div>
     <script src="../www/js/jquery-3.3.1.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
+    <script src="../controllers/validator.js"></script>
     <script src="../www/js/datatables.min.js"></script>
     <script src="../www/js/dataTables.responsive.min.js"></script>
     <script src="../www/js/init.js"></script>
     <script src="../controllers/citas.js"></script>
     <script src="js/sweetalert.min.js"></script>
     <script src="../www/js/functions.js"></script>
+    <script src="../controllers/logout.js"></script>
+    <script src="../controllers/notificaciones.js"></script>
 </body>
 
 </html>

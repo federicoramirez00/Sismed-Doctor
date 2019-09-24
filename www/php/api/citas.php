@@ -13,7 +13,7 @@ if (isset($_GET['action'])) {
 				if ($result['dataset'] = $cita->readCitas()) {
 					$result['status'] = 1;
 				} else {
-					$result['exception'] = 'No hay especialidades registradas';
+					$result['exception'] = 'No hay citas registradas';
 				}
 				break;
 			case 'readRealizadas':

@@ -45,39 +45,41 @@
     <div class="app">
         <div class="page">
             <div class="header">
-                <nav class="indigo darken-2">
-                    <div class="nav-wrapper">
-                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
-                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
-                                class="material-icons">menu</i></a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
-                            </li>
-                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
-                            </li>
-                            <li><a href="../www/pacientes.html"><i
-                                        class="material-icons left">accessibility</i>Pacientes</a></li>
-                            <li><a href="../www/disponibilidad.html"><i
-                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
-                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
-                            </li>
-                            <li><a href="../www/notificaciones.html"><i
-                                        class="material-icons left">notifications</i><span class="new badge red"
-                                        data-badge-caption="notificaciones">4</span></a></li>
-                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div class="navbar-fixed">
+                    <nav class="indigo darken-2">
+                        <div class="nav-wrapper">
+                            <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                    class="material-icons">menu</i></a>
+                            <a id="nav"></a>
+                            <ul class="right hide-on-med-and-down">
+                                <li><a href="../www/dashboard.html"><i
+                                            class="material-icons left">dashboard</i>Inicio</a>
+                                </li>
+                                <li><a href="../www/citas.html"><i
+                                            class="material-icons left">local_hospital</i>Citas</a>
+                                </li>
+                                <li><a href="../www/pacientes.html"><i
+                                            class="material-icons left">accessibility</i>Pacientes</a></li>
+
+                                <li><a href="../www/perfil.html"><i
+                                            class="material-icons left">account_box</i>Perfil</a>
+                                </li>
+                                <li><a href="../www/notificaciones.html"><i
+                                            class="material-icons left">notifications</i><span class="new badge red"
+                                            data-badge-caption="notificaciones">4</span></a></li>
+                                <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
-                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
-                            disponibles</a></li>
+
                     <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
-                    <li><a href="../www/notificaciones.html"><i
-                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
-                                data-badge-caption="">4</span></a></li>
                     <li><a href="#" onclick="logOut()"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
                     </li>
                 </ul>
@@ -109,7 +111,7 @@
                                 <h5 class="white-text">Soporte técnico</h5>
                                 <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
                                 <blockquote>
-                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
+                                    <p class="grey-text text-lighten-4">soportetecnicosismed@gmail.com</p>
                                 </blockquote>
                                 <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
                                 <blockquote>
@@ -120,7 +122,7 @@
                     </div>
                     <div class="footer-copyright">
                         <div class="container">
-                            © 2019 Derechos reservados a <b><i>influencers</i></b>.
+                            ©<b><i> SISMED</i></b> Derechos reservados.
                         </div>
                     </div>
                 </footer>
@@ -132,6 +134,7 @@
     <script src="../www/js/init.js"></script>
     <script src="js/sweetalert.min.js"></script>
     <script src="js/functions.js"></script>
+    <script src="../controllers/notificaciones.js"></script>
     <script src="../controllers/precitas.js"></script>
 </body>
 

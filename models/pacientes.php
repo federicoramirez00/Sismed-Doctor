@@ -12,7 +12,8 @@ class Pacientes extends Validator
     private $peso = null;
     private $estatura = null;
     private $idestado = null;
-    private $ruta = null;
+	private $ruta = null;
+	private $iddoctor = null;
 
     public function setId($value)
 	{
@@ -182,13 +183,35 @@ class Pacientes extends Validator
 	public function getRuta()
 	{
 		return $this->ruta;
-    }
+	}
+	
+	public function setIdDoctor($value)
+	{
+		if ($this->validateId($value)) {
+			$this->iddoctor = $value;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function getIdDoctor()
+	{
+		return $this->iddoctor;
+	}
     
     //Manejo del CRUD
     public function readPacientes()
 	{
 		$sql = 'SELECT id_paciente, nombre_paciente, apellido_paciente, correo_paciente, usuario_paciente, fecha_nacimiento, foto_paciente, peso_paciente, estatura_paciente, id_estado FROM pacientes ORDER BY apellido_paciente';
 		$params = array(null);
+		return Database::getRows($sql, $params);
+	}
+
+	public function readPacientesByDoctor()
+	{
+		$sql = 'SELECT c.id_estado, p.id_paciente, p.nombre_paciente, p.apellido_paciente, p.fecha_nacimiento, p.foto_paciente, p.peso_paciente, p.estatura_paciente FROM cita c INNER JOIN pacientes p USING(id_paciente) WHERE c.id_doctor = ? AND c.id_estado = ? GROUP BY p.id_paciente';
+		$params = array($this->iddoctor, 4);
 		return Database::getRows($sql, $params);
 	}
 

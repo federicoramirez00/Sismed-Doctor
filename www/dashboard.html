@@ -47,39 +47,42 @@
     <div class="app">
         <div class="page">
             <div class="header">
-                <nav class="indigo darken-2">
-                    <div class="nav-wrapper">
-                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
-                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
-                                class="material-icons">menu</i></a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
-                            </li>
-                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
-                            </li>
-                            <li><a href="../www/pacientes.html"><i
-                                        class="material-icons left">accessibility</i>Pacientes</a></li>
-                            <li><a href="../www/disponibilidad.html"><i
-                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
-                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
-                            </li>
-                            <li><a href="../www/notificaciones.html"><i
-                                        class="material-icons left">notifications</i><span class="new badge red"
-                                        data-badge-caption="notificaciones">4</span></a></li>
-                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div class="navbar-fixed">
+                    <nav class="indigo darken-2">
+                        <div class="nav-wrapper">
+                            <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                    class="material-icons">menu</i></a>
+                            <a id="nav"></a>
+                            <ul class="right hide-on-med-and-down">
+                                <li><a href="../www/dashboard.html"><i
+                                            class="material-icons left">dashboard</i>Inicio</a>
+                                </li>
+                                <li><a href="../www/citas.html"><i
+                                            class="material-icons left">local_hospital</i>Citas</a>
+                                </li>
+                                <li><a href="../www/pacientes.html"><i
+                                            class="material-icons left">accessibility</i>Pacientes</a></li>
+
+                                <li><a href="../www/perfil.html"><i
+                                            class="material-icons left">account_box</i>Perfil</a>
+                                </li>
+                                <li><a href="../www/notificaciones.html"><i
+                                            class="material-icons left">notifications</i><span class="new badge red"
+                                            data-badge-caption="notificaciones">4</span></a></li>
+                                <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
-                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
-                            disponibles</a></li>
+
                     <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
-                    <li><a href="../www/notificaciones.html"><i
-                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
-                                data-badge-caption="">4</span></a></li>
+
                     <li><a href="#" onclick="logOut()"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
                     </li>
                 </ul>
@@ -104,32 +107,27 @@
                         </div>
                         <div class="col s12 m6">
                             <div class="card">
-                                <div class="card-image">
-                                    <img src="img/consulta.jpg">
-                                    <span class="card-title white-text text-darken-4"></span>
-                                </div>
                                 <div class="card-content indigo white-text">
                                     <span class="card-title"><strong>Clínica Dra. Alma Rocío</strong></span>
-                                    <p>En nuestra clínica, todo el equipo de doctores nos preocupamos por tu salud y
-                                        brindamos el mejor servicio con la mejor disposición hacia nuestros pacientes.
+                                    <p>En nuestra clínica, todo el equipo de doctores nos preocupamos por la salud de nuestros pacientes y
+                                        brindamos el mejor servicio con la mejor disposición.
                                     </p>
-                                </div>
-                                <div class="card-action indigo">
-                                    <a href="#">This is a link</a>
                                 </div>
                             </div>
                         </div>
+                        <div id="card-citas"></div>
+                        <div id="card-proxima"></div>
                     </div>
                     <div class="row">
-                        <div class="col s12 m6">
+                        <div class="col s12 m12 l6">
                             <canvas id="chartConsultasFecha"></canvas>
                         </div>
-                        <div class="col s12 m6">
+                        <!--<div class="col s12 m6">
                             <canvas id="chartCitasDesempenoDoctor"></canvas>
                         </div>
                         <div class="col s12 m6">
                             <canvas id="chartConsultasMensuales"></canvas>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -178,6 +176,7 @@
     <script src="../www/js/functions.js"></script>
     <script src="../controllers/logout.js"></script>
     <script src="../www/js/grafico.js"></script>
+    <script src="../controllers/notificaciones.js"></script>
     <script src="../controllers/citas.js"></script>
 </body>
 

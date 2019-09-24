@@ -38,6 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../www/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="../www/css/icon.css">
     <link rel="stylesheet" type="text/css" href="../www/css/material_icons.css">
+    <link rel="stylesheet" href="../www/css/datatables.min.css">
+    <link rel="stylesheet" href="../www/css/responsive.dataTables.min.css">
     <title>SISMED</title>
 </head>
 
@@ -45,39 +47,42 @@
     <div class="app">
         <div class="page">
             <div class="header">
-                <nav class="indigo darken-2">
-                    <div class="nav-wrapper">
-                        <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
-                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
-                                class="material-icons">menu</i></a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="../www/dashboard.html"><i class="material-icons left">dashboard</i>Inicio</a>
-                            </li>
-                            <li><a href="../www/citas.html"><i class="material-icons left">local_hospital</i>Citas</a>
-                            </li>
-                            <li><a href="../www/pacientes.html"><i
-                                        class="material-icons left">accessibility</i>Pacientes</a></li>
-                            <li><a href="../www/disponibilidad.html"><i
-                                        class="material-icons left">access_time</i>Horarios disponibles</a></li>
-                            <li><a href="../www/perfil.html"><i class="material-icons left">account_box</i>Perfil</a>
-                            </li>
-                            <li><a href="../www/notificaciones.html"><i
-                                        class="material-icons left">notifications</i><span class="new badge red"
-                                        data-badge-caption="notificaciones">4</span></a></li>
-                            <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div class="navbar-fixed">
+                    <nav class="indigo darken-2">
+                        <div class="nav-wrapper">
+                            <a href="../www/dashboard.html" class="brand-logo">SISMED</a>
+                            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                    class="material-icons">menu</i></a>
+                            <a id="nav"></a>
+                            <ul class="right hide-on-med-and-down">
+                                <li><a href="../www/dashboard.html"><i
+                                            class="material-icons left">dashboard</i>Inicio</a>
+                                </li>
+                                <li><a href="../www/citas.html"><i
+                                            class="material-icons left">local_hospital</i>Citas</a>
+                                </li>
+                                <li><a href="../www/pacientes.html"><i
+                                            class="material-icons left">accessibility</i>Pacientes</a></li>
+
+                                <li><a href="../www/perfil.html"><i
+                                            class="material-icons left">account_box</i>Perfil</a>
+                                </li>
+                                <li><a href="../www/notificaciones.html"><i
+                                            class="material-icons left">notifications</i><span class="new badge red"
+                                            data-badge-caption="notificaciones">4</span></a></li>
+                                <li><a href="../www/index.html"><i class="material-icons">power_settings_new</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <ul class="sidenav indigo accent-2 white-text" id="mobile-demo">
                     <li><a href="../www/dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li>
                     <li><a href="../www/citas.html"><i class="material-icons">local_hospital</i>Citas</a></li>
                     <li><a href="../www/pacientes.html"><i class="material-icons">accessibility</i>Pacientes</a></li>
-                    <li><a href="../www/disponibilidad.html"><i class="material-icons">access_time</i>Horarios
-                            disponibles</a></li>
+
                     <li><a href="../www/perfil.html"><i class="material-icons">account_box</i>Perfil</a></li>
-                    <li><a href="../www/notificaciones.html"><i
-                                class="material-icons">notifications</i>Notificaciones<span class="new badge red"
-                                data-badge-caption="">4</span></a></li>
+
                     <li><a href="#" onclick="logOut()"><i class="material-icons">power_settings_new</i>Cerrar sesión</a>
                     </li>
                 </ul>
@@ -86,85 +91,45 @@
                 <div class="container">
                     <div class="row">
                         <h5 class="text-align center-align"><b>Gestión de pacientes</b></h5>
-                        <br>
-
-                        <table class="striped responsive-table">
+                        <!--<a onclick="M.toast({html: 'I am a toast', classes: 'rounded'})" class="btn">Toast!</a>-->
+                        <h5 class="text-align center-align">Mis pacientes</h5>
+                        <table id="tabla-asignados">
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Foto</th>
-                                    <th>Nombre paciente</th>
-                                    <th>Apellido paciente</th>
-                                    <th>Correo electrónico</th>
-                                    <th>Usuario</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Última cita</th>
                                     <th>Fecha de nacimiento</th>
                                     <th>Peso</th>
                                     <th>Estatura</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
                                 </tr>
                             </thead>
-
-                            <tbody>
+                            <tbody id="tabla-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <h5 class="text-align center-align">Todos los pacientes</h5>
+                        <table id="tabla-pacientes">
+                            <thead>
                                 <tr>
-                                    <td>1</td>
-                                    <td><img src="../www/img/photo.jpg" class="materialboxed" width="100" height="100">
-                                    </td>
-                                    <td>Alvin</td>
-                                    <td>Eclair</td>
-                                    <td>eclair_alvin@gmail.com</td>
-                                    <td>EA01</td>
-                                    <td>09/07/1989</td>
-                                    <td>124 kg</td>
-                                    <td>178 cm</td>
-                                    <td><i class="material-icons">visibility</i></td>
-                                    <td><button
-                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
-                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
-                                                class="material-icons">autorenew</i></button></td>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Teléfono</th>
+                                    <th>Fecha de nacimiento</th>
+                                    <th>Peso</th>
+                                    <th>Estatura</th>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><img src="../www/img/desc.jpg" class="materialboxed" width="100" height="100">
-                                    </td>
-                                    <td>Alan</td>
-                                    <td>Jellybean</td>
-                                    <td>jellybean_alan@gmail.com</td>
-                                    <td>JA01</td>
-                                    <td>09/07/1979</td>
-                                    <td>140 kg</td>
-                                    <td>185 cm</td>
-                                    <td><i class="material-icons">visibility</i></td>
-                                    <td><button
-                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
-                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
-                                                class="material-icons">autorenew</i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td><img src="../www/img/foto.jpg" class="materialboxed" width="100" height="100">
-                                    </td>
-                                    <td>Jonathan</td>
-                                    <td>Lollipop</td>
-                                    <td>lollipop_jonathan@gmail.com</td>
-                                    <td>LJ01</td>
-                                    <td>10/07/1996</td>
-                                    <td>85 kg</td>
-                                    <td>180 cm</td>
-                                    <td><i class="material-icons">visibility</i></td>
-                                    <td><button
-                                            class="waves-effect waves-light btn red btn tooltipped btn modal-trigger"
-                                            data-position="bottom" data-tooltip="Dar de baja" href="#modal2"><i
-                                                class="material-icons">autorenew</i></button></td>
-                                </tr>
-                            </tbody>
+                            </thead>
+                            <tbody id="table-body"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="fixed-action-btn">
-                <a class="btn-floating btn-large green accent-4 btn modal-trigger btn tooltipped" data-target="modal1"
-                    data-position="left" data-tooltip="Agregar paciente">
+                <a class="btn-floating btn-large green accent-4 btn modal-trigger btn tooltipped"
+                    data-target="modal-create" data-position="left" data-tooltip="Agregar paciente">
                     <i class="large material-icons">add</i>
                 </a>
             </div>
@@ -186,7 +151,7 @@
                                 <h5 class="white-text">Soporte técnico</h5>
                                 <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
                                 <blockquote>
-                                    <p class="grey-text text-lighten-4">soporte@sismed.com</p>
+                                    <p class="grey-text text-lighten-4">soportetecnicosismed@gmail.com</p>
                                 </blockquote>
                                 <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
                                 <blockquote>
@@ -197,70 +162,59 @@
                     </div>
                     <div class="footer-copyright">
                         <div class="container">
-                            © 2019 Derechos reservados a <b><i>influencers</i></b>.
+                            ©<b><i> SISMED</i></b> Derechos reservados.
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
     </div>
-    <div id="modal1" class="modal">
+    <!-- Modal Structure -->
+    <div id="modal-create" class="modal modal-fixed-footer">
         <div class="modal-content">
-            <form class="col s12">
-                <img class="materialboxed center-align" width="150" height="150" src="../www/img/descarga.jpg">
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                        <input placeholder="Nombre" id="first_name" type="text" class="validate" value="Federico">
-                        <label for="first_name">Nombres</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <input id="last_name" type="text" class="validate" value="Ramírez">
-                        <label for="last_name">Apellidos</label>
-                    </div>
+            <h4>Modal Header</h4>
+            <form id="form-create" autocomplete="off" validate>
+                <div class="input-field col s12 m6">
+                    <input id="create_nombre" name="create_nombre" type="text" class="validate" required>
+                    <label for="create_nombre">Nombres del paciente</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="email" type="email" value="federico_ramirez@sismed.com" class="validate">
-                        <label for="email">Correo electrónico</label>
-                    </div>
+                <div class="input-field col s12 m6">
+                    <input id="create_apellido" name="create_apellido" type="text" class="validate" required>
+                    <label for="create_apellido">Apellidos del paciente</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input value="federamirez" id="direccion" type="text" class="validate">
-                        <label for="usuario">Nombre de usuario</label>
-                    </div>
+                <div class="input-field col s12 m6">
+                    <input id="create_correo" name="create_correo" type="email" class="validate" required>
+                    <label for="create_correo">Correo electrónico</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="fecha" type="date" value="2000-08-29" class="validate">
-                        <label for="fecha">Fecha de nacimiento</label>
-                    </div>
+                <div class="input-field col s12 m6">
+                    <input id="create_fecha" name="create_fecha" type="date" class="validate" required>
+                    <label for="create_fecha">Fecha de nacimiento</label>
                 </div>
-                <div class="row">
-                    <div class="file-field input-field">
-                        <div class="btn indigo">
-                            <span><i class="material-icons">add_a_photo</i></span>
-                            <input type="file" multiple>
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Selecciona una foto">
-                        </div>
-                    </div>
+                <div class="input-field col s12 m6">
+                    <input id="create_peso" name="create_peso" type="number" class="validate" min="1" max="300"
+                        step="0.1" required>
+                    <label for="create_peso">Peso del paciente (lb)</label>
                 </div>
-                <div class="switch">
-                    <span>Estado</span>
-                    <label>
-                        <i class="material-icons">visibility_off</i>
-                        <input type="checkbox">
-                        <span class="lever"></span>
-                        <i class="material-icons">visibility</i>
-                    </label>
+                <div class="input-field col s12 m6">
+                    <input id="create_estatura" name="create_estatura" type="number" class="validate" min="80" max="250"
+                        step="1" required>
+                    <label for="create_estatura">Estatura del paciente (cm)</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="create_telefono" name="create_telefono" type="number" class="validate" maxlength="8"
+                        required>
+                    <label for="create_telefono">Teléfono</label>
+                </div>
+                <div>
+                    <a href="#!" data-tooltip="Cancelar" class="modal-close btn waves-effect red tooltipped"><i
+                            class="material-icons left">close</i></a>
+                    <button type="submit" class="btn waves-effect green tooltipped" data-tooltip="Agregar paciente"><i
+                            class="material-icons">add</i>Agregar</button>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
-            <a class="modal-close waves-effect waves-light btn green"><i class="material-icons">check</i></a>
+
         </div>
     </div>
     <div id="modal2" class="modal">
@@ -283,9 +237,17 @@
             <a class="modal-close waves-effect waves-light btn green"><i class="material-icons">check</i></a>
         </div>
     </div>
-    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/jquery-3.3.1.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
+    <script src="../www/js/datatables.min.js"></script>
+    <script src="../www/js/dataTables.responsive.min.js"></script>
+    <script src="../www/js/dataTables.jqueryui.min.js"></script>
     <script src="../www/js/init.js"></script>
+    <script src="../www/js/sweetalert.min.js"></script>
+    <script src="../www/js/functions.js"></script>
+    <script src="../controllers/pacientes.js"></script>
+    <script src="../controllers/logout.js"></script>
+    <script src="../controllers/notificaciones.js"></script>
 </body>
 
 </html>
