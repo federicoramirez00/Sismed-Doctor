@@ -21,6 +21,7 @@ function fillTable(rows) {
                 <td>${row.hora_cita}</td>
                 <td class="green-text">${row.estado}</td>
                 <td>
+                    <a href="#" onclick="realizarCita(${row.id_cita})" class="green-text tooltipped" data-tooltip="Realizar"><i class="material-icons">check</i></a>
                     <a href="#" onclick="modalUpdate(${row.id_cita})" class="green-text tooltipped" data-tooltip="Reprogramar"><i class="material-icons">history</i></a>
                     <a href="#" onclick="confirmDelete(${row.id_cita})" class="red-text tooltipped" data-tooltip="Cancelar"><i class="material-icons">close</i></a>
                 </td>
@@ -148,6 +149,57 @@ function countCitas() {
     }
 }
 
+function realizarCita(id) {
+    swal({
+        title: 'Advertencia',
+        text: '¿Está seguro que la cita ha sido realizada?',
+        icon: 'info',
+        buttons: ['Cancelar', 'Aceptar'],
+        closeOnClickOutside: false,
+        closeOnEsc: false
+    }).then(function (value) {
+        if (value) {
+            $.ajax({
+                url: apiCitas + 'realizarCita',
+                type: "post",
+                data: {
+                    id_cita: id
+                },
+                datatype: "json"
+            })
+                .done(function (response) {
+                    //Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+                    if (isJSONString(response)) {
+                        const result = JSON.parse(response);
+                        //Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                        if (result.status) {
+                            showTable();
+                            /*swal({
+                                title: 'Enhorabuena',
+                                text: 'Se ha agendado la cita',
+                                icon: 'info',
+                                button: 'Aceptar',
+                                closeOnClickOutside: false,
+                                closeOnEsc: false
+                            });*/
+                            //sweetAlert(1, 'Cita realizada', 'citas.html');
+                            M.toast({html: 'Cita realizada', classes: 'rounded'});
+                            $("#table-body").DataTable().destroy();
+                            showTable();
+                            location.href = 'citas.html';
+                        }
+                    } else {
+                        console.log(response);
+                    }
+                })
+                .fail(function (jqXHR) {
+                    //Se muestran en consola los posibles errores de la solicitud AJAX
+                    console.log("Error: " + jqXHR.status + " " + jqXHR.statusText);
+                });
+        }
+    });
+}
+
 function getProximaCita() {
     if (localStorage.getItem('id') != null) {
         $.ajax({
@@ -219,40 +271,52 @@ function getProximaCita() {
     }
 }
 
+function modalCreate()
+{
+    $('#form-create')[0].reset();
+    //fillSelect(anexodoct + 'fill','create_doctor', null)
+    fillSelect(anexopaci + 'fillpaciente', 'create_paciente',null);
+    $('#modal-create').modal('show');
+}
+
 // Función para mostrar formulario con registro a modificar
 function modalUpdate(id) {
-    $.ajax({
-        url: apiCitas + 'get',
-        type: 'post',
-        data: {
-            id_cita: id
-        },
-        datatype: 'json'
-    })
-        .done(function (response) {
-            // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado consola
-            if (isJSONString(response)) {
-                const result = JSON.parse(response);
-                // Se comprueba si el resultado es satisfactorio para mostrar los valores en el formulario, sino se muestra la excepción
-                if (result.status) {
-                    console.log(result);
-                    //$('#form-reprogramar')[0].reset();
-                    $('#id_cita').val(result.dataset.id_cita);
-                    $('#update_fecha').val(result.dataset.fecha_cita);
-                    $('#update_hora').val(result.dataset.hora_cita);
-                    M.updateTextFields();
-                    $('#update-cita').modal('open');
-                } else {
-                    sweetAlert(2, result.exception, null);
-                }
-            } else {
-                console.log(response);
-            }
+    if (localStorage.getItem('id') != null) {
+        $.ajax({
+            url: apiCitas + 'get&idDoctor='+localStorage.getItem('id'),
+            type: 'post',
+            data: {
+                id_cita: id
+            },
+            datatype: 'json'
         })
-        .fail(function (jqXHR) {
-            // Se muestran en consola los posibles errores de la solicitud AJAX
-            console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
-        });
+            .done(function (response) {
+                // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio para mostrar los valores en el formulario, sino se muestra la excepción
+                    if (result.status) {
+                        //console.log(result);
+                        $('#form-reprogramar')[0].reset();
+                        $('#cita').val(result.dataset.id_cita);
+                        $('#update_fecha').val(result.dataset.fecha_cita);
+                        $('#update_hora').val(result.dataset.hora_cita);
+                        M.updateTextFields();
+                        $('#update-cita').modal('open');
+                    } else {
+                        sweetAlert(2, result.exception, null);
+                    }
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function (jqXHR) {
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+    } else {
+        location.href = 'index.html';
+    }
 }
 
 // Función para modificar un registro seleccionado previamente

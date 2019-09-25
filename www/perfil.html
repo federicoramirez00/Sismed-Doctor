@@ -90,46 +90,54 @@
                 <div class="container">
                     <div class="row">
                         <h4 class="text-align center-align">Mi perfil</h4>
-                        <form class="col s12">
-                            <img class="materialboxed center-align" width="250" height="250"
-                                src="../www/img/descarga.jpg" id="profile-pic">
+                        <!--<img id="foto" class="materialboxed center-align" width="150" height="150">-->
+                        <form id="form-profile" class="col s12" autocomplete="off">
                             <div class="row">
                                 <div class="input-field col s12 m6">
-                                    <input placeholder="Nombre" id="nombres" name="nombres" type="text"
-                                        class="validate">
-                                    <label for="first_name">Nombres</label>
+                                    <input placeholder="Nombre" id="profile_nombre" name="profile_nombre" type="text"
+                                        class="validate" required>
+                                    <label for="profile_nombre">Nombres</label>
                                 </div>
                                 <div class="input-field col s12 m6">
-                                    <input placeholder="Apellidos" id="apellidos" name="apellidos" type="text"
-                                        class="validate">
-                                    <label for="last_name">Apellidos</label>
+                                    <input placeholder="Apellidos" id="profile_apellido" name="profile_apellido"
+                                        type="text" class="validate" required>
+                                    <label for="profile_apellido">Apellidos</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input placeholder="Correo electrónico" type="email" id="correo" name="correo"
-                                        class="validate">
-                                    <label for="email">Correo electrónico</label>
+                                    <input placeholder="Correo electrónico" type="email" id="profile_correo"
+                                        name="profile_correo" class="validate" required>
+                                    <label for="profile_correo">Correo electrónico</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input placeholder="Nombre de usuario" type="text" id="usuario" name="usuario"
-                                        class="validate">
-                                    <label for="usuario">Nombre de usuario</label>
+                                    <input placeholder="Nombre de usuario" type="text" id="profile_usuario"
+                                        name="profile_usuario" class="validate" required>
+                                    <label for="profile_usuario">Nombre de usuario</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input placeholder="" type="date" id="fecha" class="validate">
+                                    <input placeholder="" type="date" id="profile_fecha" name="profile_fecha"
+                                        class="validate" required>
                                     <label for="fecha">Fecha de nacimiento</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input placeholder="Teléfono" type="number" id="telefono" name="telefono"
-                                        class="validate">
-                                    <label for="telefomo">Teléfono</label>
+                                    <input placeholder="Teléfono" type="number" id="profile_telefono"
+                                        name="profile_telefono" class="validate" required>
+                                    <label for="profile_telefomo">Teléfono</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
+                                    <button class="btn waves-effect waves-light green" type="submit" name="action">
+                                        <i class="material-icons left">save</i>Guardar cambios
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -147,9 +155,9 @@
                                 data-position="left" data-tooltip="Cambiar contraseña" data-target="modal-password"><i
                                     class="material-icons">lock</i></a>
                         </li>
-                        <li><a class="btn-floating btn tooltipped green btn modal-trigger" data-position="left"
-                                data-tooltip="Editar perfil" data-target="modal-profile"><i
-                                    class="material-icons">edit</i>Editar</a></li>
+                        <!--<li><a class="btn-floating btn tooltipped green btn modal-trigger" data-position="left"
+                                data-tooltip="Editar perfil" onclick="modalProfile()"><i
+                                    class="material-icons">edit</i>Editar</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -161,17 +169,20 @@
                                 <h5 class="white-text"><b>Contáctanos</b></h5>
                                 <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
                                 <blockquote>
-                                    <p class="grey-text text-lighten-4">contacto@sismed.com</p>
-                                </blockquote>
-                                <blockquote>
-                                    <p class="grey-text text-lighten-4">alma_rocio@sismed.com</p>
+                                    <p class="grey-text text-lighten-4">dra.diazromero@yahoo.com</p>
                                 </blockquote>
                                 <p class="grey-text text-lighten-4"><b>Teléfono</b></p>
                                 <blockquote>
-                                    <p class="grey-text text-lighten-4">(503) 2245-5455</p>
+                                    <p class="grey-text text-lighten-4">(503) 7165-4860</p>
                                 </blockquote>
                             </div>
-
+                            <div class="col l4 offset-l2 s12">
+                                <h5 class="white-text"><b>Soporte técnico</b></h5>
+                                <p class="grey-text text-lighten-4"><b>Correo electrónico</b></p>
+                                <blockquote>
+                                    <p class="grey-text text-lighten-4">soportetecnicosismed@gmail.com</p>
+                                </blockquote>
+                            </div>
                         </div>
                     </div>
                     <div class="footer-copyright">
@@ -183,33 +194,33 @@
             </div>
         </div>
     </div>
-    <div id="modal-profile" class="modal">
+    <!--<div id="modal-profile" class="modal">
         <div class="modal-content">
             <form id="form-profile" class="col s12">
                 <img id="foto" class="materialboxed center-align" width="150" height="150">
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <input placeholder="Nombres" id="profile-nombres" type="text" class="validate">
-                        <label for="first_name">Nombres</label>
+                        <input placeholder="Nombres" id="profile-nombre" name="profile_nombre" type="text" class="validate">
+                        <label for="profile_nombre">Nombres</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input placeholder="Apellidos" type="text" id="profile-apellidos" name="profile-apellidos"
+                        <input placeholder="Apellidos" type="text" id="profile-apellido" name="profile-apellido"
                             class="validate">
-                        <label for="last_name">Apellidos</label>
+                        <label for="profile_apellido">Apellidos</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input placeholder="Correo electrónico" type="email" id="profile-correo" name="profile-correo"
                             class="validate">
-                        <label for="correo">Correo electrónico</label>
+                        <label for="profile_correo">Correo electrónico</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input placeholder="Nombre de usuario" type="text" id="profile-direccion"
-                            name="profile-direccion" class="validate">
-                        <label for="usuario">Nombre de usuario</label>
+                        <input placeholder="Nombre de usuario" type="text" id="profile-usuario"
+                            name="profile-usuario" class="validate">
+                        <label for="profile-usuario">Nombre de usuario</label>
                     </div>
                 </div>
                 <div class="row">
@@ -249,34 +260,38 @@
                 </div>
             </form>
         </div>
-        <!--<div class="modal-footer">
+        <div class="modal-footer">
 
-        </div>-->
-    </div>
+        </div>
+    </div>-->
     <div id="modal-password" class="modal">
         <div class="modal-content">
-            <form id="form-password" class="col s12">
+            <form id="form-password" class="col s12" autocomplete="off">
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <input placeholder="Nombre" id="first_name" type="password" class="validate" value="Federico">
+                        <input placeholder="Contraseña actual" id="clave_actual" name="clave_actual" type="password"
+                            class="validate" required>
                         <label for="first_name">Contraseña actual</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input id="last_name" type="password" class="validate" value="Ramírez">
+                        <input placeholder="Nueva contraseña" id="clave_nueva_1" name="clave_nueva_1" type="password"
+                            class="validate" required>
                         <label for="last_name">Nueva contraseña</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" value="federico_ramirez@sismed.com" class="validate">
+                        <input placeholder="Confirmar nueva contraseña" id="clave_nueva_2" name="clave_nueva_2"
+                            type="password" class="validate" required>
                         <label for="email">Confirmar nueva contraseña</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <a class="modal-close waves-effect waves-light btn red"><i class="material-icons">close</i></a>
-                        <a class="modal-close waves-effect waves-light btn green"><i
-                                class="material-icons">check</i></a>
+                        <button class="btn waves-effect waves-light green" type="submit" name="action">
+                            <i class="material-icons left">save</i>Modificar
+                        </button>
                     </div>
                 </div>
             </form>
@@ -285,7 +300,7 @@
 
         </div>
     </div>
-    <script src="../www/js/jquery-2.2.3.min.js"></script>
+    <script src="../www/js/jquery-3.3.1.min.js"></script>
     <script src="../www/js/materialize.min.js"></script>
     <script src="../www/js/sweetalert.min.js"></script>
     <script src="../www/js/functions.js"></script>

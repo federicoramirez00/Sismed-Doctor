@@ -195,7 +195,7 @@ $('#form-create').submit(function () {
                 if (result.session) {
                     if (result.status) {
                         $('#modal-create').modal('close');
-                        M.toast({html: result.message, classes: 'rounded'});
+                        M.toast({html: 'Paciente creado', classes: 'rounded'});
                         $("#tabla-pacientes").DataTable().destroy();
                         $('#form-create')[0].reset();
                         showTable();

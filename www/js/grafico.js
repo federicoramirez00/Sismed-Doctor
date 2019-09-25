@@ -8,7 +8,7 @@ $(document).ready(function()
 const apiConsultas = 'http://localhost/php/api/consultas.php?action=';
 
 //Función para la creación del gráfico de las consultas realizadas por mes
-function chartConsultasFecha(){
+function chartConsultasFecha() {
     $.ajax({
         url: apiConsultas + 'estadisticasCitas&idDoctor='+localStorage.getItem('id'),
         type: 'post',

@@ -15,14 +15,15 @@ function logOut()
             location.href = 'index.html';
             //sweetAlert(1, 'Perfil modificado correctamente', 'index.html');
         } else {
-            swal({
+            M.toast({html: 'Continue con la sesión', classes: 'rounded'});
+            /*swal({
                 title: 'Enhorabuena',
                 text: 'Continúe con la sesión',
                 icon: 'info',
                 button: 'Aceptar',
                 closeOnClickOutside: false,
                 closeOnEsc: false
-            });
+            });*/
         }
     });
 }
