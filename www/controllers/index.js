@@ -48,6 +48,7 @@ $('#form-sesion').submit(function () {
                 //Se comprueba si la respuesta es satisfactoria, sino se muestra la excepción
                 if (dataset.status) {
                     localStorage.setItem('id', dataset.id);
+                    alert(localStorage.getItem('id'));
                     sweetAlert(1, 'Autenticación correcta', 'dashboard.html');
                 } else {
                     if (cont >= 3) {

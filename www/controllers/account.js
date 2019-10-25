@@ -61,6 +61,7 @@ function modalProfile() {
                     }
                 } else {
                     console.log(response);
+                    alert(localStorage.getItem('id'));
                 }
             })
             .fail(function (jqXHR) {

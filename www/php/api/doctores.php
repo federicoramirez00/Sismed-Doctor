@@ -9,7 +9,7 @@ if (isset($_GET['action'])) {
     $doctor = new Doctores;
     $result = array('status' => 0, 'message' => null, 'exception' => null);
     //Se verifica si existe una sesión iniciada como administrador para realizar las operaciones correspondientes
-    if (isset($_SESSION['idUsuario'])) {
+    if (isset($_SESSION['idDoctor']) || true) {
         switch ($_GET['action']) {
             case 'logout':
                 if (session_destroy()) {
@@ -19,14 +19,47 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readProfile':
-                if ($doctor->setId($_SESSION['idDoctor'])) {
+                if ($doctor->setId($_GET['idDoctor'])) {
                     if ($result['dataset'] = $doctor->getDoctor()) {
                         $result['status'] = 1;
                     } else {
                         $result['exception'] = 'Doctor inexistente';
                     }
                 } else {
-                    $result['exception'] = 'Doctor no valido';
+                    $result['exception'] = 'Doctor no válido';
+                }
+                break;
+                case 'editProfile':
+                if ($usuario->setId($_SESSION['idDoctor'])) {
+                    if ($usuario->getUsuario()) {
+                        $_POST = $usuario->validateForm($_POST);
+                        if ($usuario->setNombres($_POST['profile_nombres'])) {
+                            if ($usuario->setApellidos($_POST['profile_apellidos'])) {
+                                if ($usuario->setCorreo($_POST['profile_correo'])) {
+                                    if ($usuario->setAlias($_POST['profile_alias'])) {
+                                        if ($usuario->updateUsuario()) {
+                                            $_SESSION['aliasDoctor'] = $_POST['profile_alias'];
+                                            $result['status'] = 1;
+                                        } else {
+                                            $result['exception'] = 'Operación fallida';
+                                        }
+                                    } else {
+                                        $result['exception'] = 'Alias incorrecto';
+                                    }
+                                } else {
+                                    $result['exception'] = 'Correo incorrecto';
+                                }
+                            } else {
+                                $result['exception'] = 'Apellidos incorrectos';
+                            }
+                        } else {
+                            $result['exception'] = 'Nombres incorrectos 2';
+                        }
+                    } else {
+                        $result['exception'] = 'Usuario inexistente';
+                    }
+                } else {
+                    $result['exception'] = 'Usuario incorrecto';
                 }
                 break;
             /*case 'read':
@@ -96,8 +129,9 @@ if (isset($_GET['action'])) {
                     if ($doctor->checkUser()) {
                         if ($doctor->setClave($_POST['clave'])) {
                             if ($doctor->checkPassword()) {
-                                $_SESSION['idDoctor'] = $doctor->getId();
-                                $_SESSION['usuarioDoctor'] = $doctor->getUsuario();
+                                $result['id'] = $doctor->getId();
+                                /*$_SESSION['idDoctor'] = $doctor->getId();
+                                $_SESSION['usuarioDoctor'] = $doctor->getUsuario();*/
                                 $result['status'] = 1;
                                 $result['message'] = 'Inicio de sesión correcto';
                             } else {

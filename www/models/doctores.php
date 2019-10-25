@@ -169,15 +169,27 @@ class Doctores extends Validator
 	
 	public function checkUser()
 	{
-		$sql = 'SELECT id_usuario FROM usuarios_a WHERE usuario_usuario = ?';
+		$sql = 'SELECT id_doctor FROM doctores WHERE usuario_doctor = ?';
 		$params = array($this->usuario);
 		$data = Database::getRow($sql, $params);
 		if ($data) {
-			$this->idusuario = $data['id_usuario'];
+			$this->iddoctor = $data['id_doctor'];
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public function checkPassword()
+	{
+		$sql = 'SELECT contrasena_doctor FROM doctores WHERE id_doctor = ?';
+		$params = array($this->iddoctor);
+		$data = Database::getRow($sql, $params);
+		if (password_verify($this->clave, $data['contrasena_doctor'])) {
+            return true;
+        } else {
+            return false;
+        }
 	}
     
     public function createDoctor()
