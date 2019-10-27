@@ -195,7 +195,38 @@ class Validator
 
     public function validatePassword($value)
     {
-        if (strlen($value) > 5) {
+        $errorClave = "";
+		if(strlen($value) < 8){
+			$errorClave= "La contraseña debe tener al menos 8 caracteres";
+			return array(false,$errorClave);
+		}
+		if (!preg_match('`[a-z]`',$value)){
+			$errorClave = "La contraseña debe tener al menos una letra minúscula";
+			return array(false,$errorClave);
+		}
+		if (!preg_match('`[A-Z]`',$value)){
+			$errorClave = "La contraseña debe tener al menos una letra mayúscula";
+			return array(false,$errorClave);
+		}
+		if (!preg_match('`[0-9]`',$value)){
+			$errorClave = "La contraseña debe tener al menos un caracter numérico";
+			return array(false,$errorClave);
+		}
+		if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,100}$/", $value)){
+			$errorClave = "La contraseña debe tener al menos un caracter especial";
+			return array(false,$errorClave);
+		}
+		return array(true,'');
+        /*if (strlen($value) > 5) {
+            return true;
+        } else {
+            return false;
+        }*/
+    }
+
+    public function validatePhoneNumber($value)
+    {
+        if (preg_match('/^([0-9]{8})$/',$value)) {
             return true;
         } else {
             return false;

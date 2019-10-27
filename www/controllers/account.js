@@ -54,8 +54,7 @@ function modalProfile() {
                         $('#profile_usuario').val(result.dataset.usuario_doctor);
                         $('#profile_fecha').val(result.dataset.fecha_nacimiento);
                         $('#profile_telefono').val(result.dataset.telefono_doctor);
-                        //$('#foto_usuario').val(result.dataset.foto_doctor);
-                        $('#modal-profile').modal('open');
+                        //$('#modal-profile').modal('open');
                     } else {
                         sweetAlert(2, result.exception, null);
                     }
@@ -92,8 +91,8 @@ $('#form-profile').submit(function () {
                     const result = JSON.parse(response);
                     // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
                     if (result.status) {
-                        $('#modal-profile').modal('close');
-                        sweetAlert(1, result.message, 'perfil.html');
+                        //$('#modal-profile').modal('close');
+                        sweetAlert(1, 'Perfil modificado correctamente', 'perfil.html');
                         /*M.toast({html: result.message, classes: 'rounded'});
                         location.href = 'perfil.html';*/
                     } else {
@@ -132,7 +131,7 @@ $('#form-password').submit(function () {
                         //sweetAlert(1, 'Contraseña modificada exitosamente', 'perfil.html');
                         M.toast({ html: 'Contraseña modificada exitosamente', classes: 'rounded' });
                     } else {
-                        M.toast({ html: result.exception, classes: 'rounded' });
+                        M.toast({html: result.exception, classes: 'rounded'});
                     }
                 } else {
                     console.log(response);

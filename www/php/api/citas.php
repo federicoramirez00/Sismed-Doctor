@@ -10,10 +10,14 @@ if (isset($_GET['action'])) {
 	if (isset($_SESSION['idUsuario']) || true) {
 		switch ($_GET['action']) {
 			case 'readCita':
-				if ($result['dataset'] = $cita->readCitas()) {
-					$result['status'] = 1;
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
+					if ($result['dataset'] = $cita->readCitas()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'No hay citas registradas';
+					}
 				} else {
-					$result['exception'] = 'No hay citas registradas';
+					$result['exception'] = 'No se encontraron datos para el doctor';
 				}
 				break;
 			case 'readRealizadas':
@@ -91,7 +95,7 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'count':
-				if ($cita->setIdCita($_POST['id_cita'])) {
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
 					if ($result['dataset'] = $cita->countCitasDiarias()) {
 						$result['status'] = 1;
 					} else {

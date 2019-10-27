@@ -29,22 +29,29 @@ if (isset($_GET['action'])) {
                     $result['exception'] = 'Doctor no válido';
                 }
                 break;
-                case 'editProfile':
-                if ($usuario->setId($_SESSION['idDoctor'])) {
-                    if ($usuario->getUsuario()) {
-                        $_POST = $usuario->validateForm($_POST);
-                        if ($usuario->setNombres($_POST['profile_nombres'])) {
-                            if ($usuario->setApellidos($_POST['profile_apellidos'])) {
-                                if ($usuario->setCorreo($_POST['profile_correo'])) {
-                                    if ($usuario->setAlias($_POST['profile_alias'])) {
-                                        if ($usuario->updateUsuario()) {
-                                            $_SESSION['aliasDoctor'] = $_POST['profile_alias'];
-                                            $result['status'] = 1;
+            case 'editProfile':
+                if ($doctor->setId($_GET['idDoctor'])) {
+                    if ($doctor->getDoctor()) {
+                        $_POST = $doctor->validateForm($_POST);
+                        if ($doctor->setNombre($_POST['profile_nombre'])) {
+                            if ($doctor->setApellido($_POST['profile_apellido'])) {
+                                if ($doctor->setCorreo($_POST['profile_correo'])) {
+                                    if ($doctor->setUsuario($_POST['profile_usuario'])) {
+                                        if ($doctor->setFecha($_POST['profile_fecha'])) {
+                                            if ($doctor->setTelefono($_POST['profile_telefono'])) {
+                                                if ($doctor->updateProfile()) {
+                                                    $result['status'] = 1;
+                                                } else {
+                                                    $result['exception'] = 'Operación fallida';
+                                                }
+                                            } else {
+                                                $result['exception'] = 'Teléfono incorrecto';
+                                            }
                                         } else {
-                                            $result['exception'] = 'Operación fallida';
+                                            $result['exception'] = 'Fecha de nacimiento incorrecta';
                                         }
                                     } else {
-                                        $result['exception'] = 'Alias incorrecto';
+                                        $result['exception'] = 'Nombre de usuario incorrecto';
                                     }
                                 } else {
                                     $result['exception'] = 'Correo incorrecto';
@@ -53,22 +60,49 @@ if (isset($_GET['action'])) {
                                 $result['exception'] = 'Apellidos incorrectos';
                             }
                         } else {
-                            $result['exception'] = 'Nombres incorrectos 2';
+                            $result['exception'] = 'Nombres incorrectos';
                         }
                     } else {
-                        $result['exception'] = 'Usuario inexistente';
+                        $result['exception'] = 'Doctor inexistente';
                     }
+                } else {
+                    $result['exception'] = 'Doctor incorrecto';
+                }
+                break;
+            case 'password':
+                if ($doctor->setId($_GET['idDoctor'])) {
+                    $_POST = $doctor->validateForm($_POST);
+                        if ($doctor->setClave($_POST['clave_actual'])) {
+                            if ($doctor->checkPassword()) {
+                                if ($_POST['clave_actual'] != $_POST['clave_nueva_1']) {
+                                    if ($_POST['clave_nueva_1'] == $_POST['clave_nueva_2']) {
+                                        $resultado = $doctor->setClave($_POST['clave_nueva_1']);
+                                        if ($resultado[0]) {
+                                            if ($doctor->changePassword()) {
+                                                $result['status'] = 1;
+                                                $result['message'] = 'Contraseña actualizada correctamente';
+                                            } else {
+                                                $result['exception'] = 'Operación fallida';
+                                            }
+                                        } else {
+                                            $result['exception'] = $resultado[1];
+                                        }
+                                    } else {
+                                        $result['exception'] = 'Contraseñas nuevas no coinciden';
+                                    }
+                                } else {
+                                    $result['exception'] = 'La nueva contraseña no puede ser igual a la actual';
+                                }
+                            } else {
+                                $result['exception'] = 'Contraseña actual incorrecta';
+                            }
+                        } else {
+                            $result['exception'] = 'Contraseña actual menor a 8 caracteres';
+                        }
                 } else {
                     $result['exception'] = 'Usuario incorrecto';
                 }
                 break;
-            /*case 'read':
-                if ($result['dataset'] = $doctor->readDoctores()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['exception'] = 'No hay Doctores registrados';
-                }
-                break;*/
             default:
                 exit('Acción no disponible');
         }

@@ -1,5 +1,5 @@
 <?php
-require_once('../database.php');
+require_once('../db.php');
 require_once('../validator.php');
 require_once('../models/pacientes.php');
 
@@ -9,7 +9,7 @@ if (isset($_GET['action'])) {
     $usuario = new Pacientes;
     $result = array('status' => 0, 'message' => null, 'exception' => null);
     //Se verifica si existe una sesión iniciada como administrador para realizar las operaciones correspondientes
-    if (isset($_SESSION['idUsuario'])) {
+    if (isset($_SESSION['idUsuario']) || true) {
         switch ($_GET['action']) {
             case 'logout':
                 if (session_destroy()) {

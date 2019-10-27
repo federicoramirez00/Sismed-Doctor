@@ -257,8 +257,8 @@ class Citas extends Validator
 
 	public function countCitasDiarias()
 	{
-		$sql = 'SELECT COUNT(id_cita) AS citas FROM cita WHERE fecha_cita = CURRENT_DATE';
-		$params = array($this->idcita);
+		$sql = 'SELECT COUNT(id_cita) AS citas FROM cita WHERE fecha_cita = CURRENT_DATE AND id_doctor = ?';
+		$params = array($this->iddoctor);
 		return Database::getRow($sql, $params);
 	}
 

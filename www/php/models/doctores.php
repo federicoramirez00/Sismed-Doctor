@@ -7,7 +7,8 @@ class Doctores extends Validator
     private $correo = null;
     private $usuario = null;
     private $clave = null;
-    private $fecha = null;
+	private $fecha = null;
+	private $telefono = null;
     private $foto = null;
     private $especialidad = null;
     private $estado = null;
@@ -117,6 +118,21 @@ class Doctores extends Validator
 		return $this->fecha;
 	}
 
+	public function setTelefono($value)
+	{
+		if ($this->validatePhoneNumber($value)) {
+			$this->telefono = $value;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function getTelefono()
+	{
+		return $this->telefono;
+	}
+
 	public function setFoto($file, $name)
 	{
 		if ($this->validateImageFile($file, $this->ruta, $name, 500, 500)) {
@@ -202,7 +218,7 @@ class Doctores extends Validator
 
 	public function getDoctor()
 	{
-		$sql = 'SELECT id_doctor, nombre_doctor, apellido_doctor, correo_doctor, usuario_doctor, contrasena_doctor, fecha_nacimiento, foto_doctor, id_especialidad, id_estado FROM doctores WHERE id_doctor = ?';
+		$sql = 'SELECT id_doctor, nombre_doctor, apellido_doctor, correo_doctor, usuario_doctor, contrasena_doctor, fecha_nacimiento, foto_doctor, telefono_doctor FROM doctores WHERE id_doctor = ?';
 		$params = array($this->iddoctor);
 		return Database::getRow($sql, $params);
 	}
@@ -216,8 +232,16 @@ class Doctores extends Validator
 
 	public function updateProfile()
 	{
-		$sql = 'UPDATE doctores SET nombre_doctor = ?, apellido_doctor = ?, correo_doctor = ?, usuario_doctor = ?, fecha_nacimiento = ?, foto_doctor = ?, id_especialidad = ? WHERE id_doctor = ?';
-		$params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $this->fecha, $this->foto, $this->especialidad, $this->iddoctor);
+		$sql = 'UPDATE doctores SET nombre_doctor = ?, apellido_doctor = ?, correo_doctor = ?, usuario_doctor = ?, fecha_nacimiento = ?, telefono_doctor = ? WHERE id_doctor = ?';
+		$params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $this->fecha, $this->telefono, $this->iddoctor);
+		return Database::executeRow($sql, $params);
+	}
+
+	public function changePassword()
+	{
+		$hash = password_hash($this->clave, PASSWORD_DEFAULT);
+		$sql = 'UPDATE doctores SET contrasena_doctor = ? WHERE id_doctor = ?';
+		$params = array($hash, $this->iddoctor);
 		return Database::executeRow($sql, $params);
 	}
 }
