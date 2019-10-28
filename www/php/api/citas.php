@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
 	session_start();
 	$cita = new Citas;
 	$result = array('status' => 0, 'message' => null, 'exception' => null);
-	if (isset($_SESSION['idUsuario']) || true) {
+	if (isset($_GET['idDoctor']) || true) {
 		switch ($_GET['action']) {
 			case 'readCita':
 				if ($cita->setIdDoctor($_GET['idDoctor'])) {
@@ -21,21 +21,41 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'readRealizadas':
-				if ($result['dataset'] = $cita->readCitasRealizadas()) {
-					$result['status'] = 1;
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
+					if ($result['dataset'] = $cita->readCitasRealizadas()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'No se han realizado citas.';
+					}
 				} else {
-					$result['exception'] = 'No se han realizado citas.';
+					$result['exception'] = 'No se encuentran datos para el doctor';
+				}
+				break;
+			case 'countPreCitas':
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
+					if ($result['dataset'] = $cita->countPreCitas()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'No hay citas.';
+					}
+				} else {
+					$result['exception'] = 'No se encuentran datos.';
 				}
 				break;
 			case 'readPreCitas':
-				if ($result['dataset'] = $cita->readPreCitas()) {
-					$result['status'] = 1;
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
+					if ($result['dataset'] = $cita->readPreCitas()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'No se han reservado citas.';
+					}
 				} else {
-					$result['exception'] = 'No se han reservado citas.';
+					$result['exception'] = 'No se encontró el doctor';
 				}
 				break;
 			case 'aceptarPreCita':
-				if ($cita->setIdestado(2)) {
+				//if ($cita->setIdDoctor($_GET['idDoctor'])) {
+				if ($cita->setIdestado(4)) {
 					if ($cita->setIdcita($_POST['id_cita'])) {
 						if ($cita->updatePreCita()) {
 							$result['status'] = 1;
@@ -49,8 +69,12 @@ if (isset($_GET['action'])) {
 				} else {
 					$result['exception'] = 'Estado incorrecto';
 				}
+				/*} else {
+					$result['exception'] = 'No se encuentran datos para del doctor';
+				}*/
 				break;
 			case 'cancelarPreCita':
+				//if ($cita->setIdDoctor($_GET['idDoctor'])) {
 				if ($cita->setIdestado(3)) {
 					if ($cita->setIdcita($_POST['id_cita'])) {
 						if ($cita->updateEstado()) {
@@ -65,6 +89,29 @@ if (isset($_GET['action'])) {
 				} else {
 					$result['exception'] = 'Estado incorrecto';
 				}
+				/*} else {
+					$result['exception'] = 'No se encuentran datos para el doctor';
+				}*/
+				break;
+			case 'realizarCita':
+				//if ($cita->setIdDoctor($_GET['idDoctor'])) {
+				if ($cita->setIdestado(1)) {
+					if ($cita->setIdcita($_POST['id_cita'])) {
+						if ($cita->updateEstado()) {
+							$result['status'] = 1;
+							$result['exception'] = 'Operación fallida';
+						} else {
+							$result['exception'] = 'Operación fallida';
+						}
+					} else {
+						$result['exception'] = 'Cita incorrecta';
+					}
+				} else {
+					$result['exception'] = 'Estado incorrecto';
+				}
+				/*} else {
+					$result['exception'] = 'No se encuentran datos para el doctor';
+				}*/
 				break;
 			case 'create':
 				$_POST = $cita->validateForm($_POST);
@@ -92,6 +139,17 @@ if (isset($_GET['action'])) {
 					}
 				} else {
 					$result['exception'] = 'Cita incorrecta';
+				}
+				break;
+			case 'getProximaCita':
+				if ($cita->setIdDoctor($_GET['idDoctor'])) {
+					if ($result['dataset'] = $cita->getProximaCita()) {
+						$result['status'] = 1;
+					} else {
+						$result['exception'] = 'Cita inexistente';
+					}
+				} else {
+					$result['exception'] = 'No se definió el doctor';
 				}
 				break;
 			case 'count':
@@ -152,19 +210,19 @@ if (isset($_GET['action'])) {
 				}
 				break;
 			case 'delete':
-				if ($cita->setId($_POST['id_especialidad'])) {
-					if ($cita->selectEspecialidad()) {
-						if ($cita->deleteEspecialidad()) {
+				if ($cita->setIdCita($_POST['id_cita'])) {
+					if ($cita->getCita()) {
+						if ($cita->deleteCita()) {
 							$result['status'] = 1;
-							$result['message'] = 'Especialidad eliminada correctamente';
+							$result['message'] = 'Cita eliminada correctamente';
 						} else {
-							$result['exception'] = 'Operación fallida';
+							$result['exception'] = 'Algo salió mal. No se pudo eliminar la cita';
 						}
 					} else {
-						$result['exception'] = 'Especialidad inexistente';
+						$result['exception'] = 'Cita inexistente';
 					}
 				} else {
-					$result['exception'] = 'Especialidad incorrecta';
+					$result['exception'] = 'Cita incorrecta';
 				}
 				break;
 			default:

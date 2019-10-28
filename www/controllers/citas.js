@@ -22,7 +22,7 @@ function fillTable(rows) {
                 <td class="green-text">${row.estado}</td>
                 <td>
                     <a href="#" onclick="realizarCita(${row.id_cita})" class="green-text tooltipped" data-tooltip="Realizar"><i class="material-icons">check</i></a>
-                    <a href="#" onclick="modalUpdate(${row.id_cita})" class="green-text tooltipped" data-tooltip="Reprogramar"><i class="material-icons">history</i></a>
+                    <!--<a href="#" onclick="modalUpdate(${row.id_cita})" class="green-text tooltipped" data-tooltip="Reprogramar"><i class="material-icons">history</i></a>-->
                     <a href="#" onclick="confirmDelete(${row.id_cita})" class="red-text tooltipped" data-tooltip="Cancelar"><i class="material-icons">close</i></a>
                 </td>
             </tr>
@@ -184,7 +184,7 @@ function realizarCita(id) {
                             });*/
                             //sweetAlert(1, 'Cita realizada', 'citas.html');
                             M.toast({html: 'Cita realizada', classes: 'rounded'});
-                            $("#table-body").DataTable().destroy();
+                            $("#tabla-citas").DataTable().destroy();
                             showTable();
                             location.href = 'citas.html';
                         }
@@ -349,3 +349,48 @@ $('#form-reprogramar').submit(function () {
             console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
         });
 })
+
+// Función para eliminar un registro seleccionado
+function confirmDelete(id)
+{
+    swal({
+        title: 'Advertencia',
+        text: '¿Está seguro que desea borrar la cita seleccionada?',
+        icon: 'warning',
+        buttons: ['Cancelar', 'Aceptar'],
+        closeOnClickOutside: false,
+        closeOnEsc: false
+    })
+    .then(function(value){
+        if (value) {
+            $.ajax({
+                url: apiCitas + 'delete',
+                type: 'post',
+                data:{
+                    id_cita: id
+                },
+                datatype: 'json'
+            })
+            .done(function(response){
+                // Se verifica si la respuesta de la API es una cadena JSON, sino se muestra el resultado en consola
+                if (isJSONString(response)) {
+                    const result = JSON.parse(response);
+                    // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
+                    if (result.status) {
+                        $("#tabla-citas").DataTable().destroy();
+                        showTable();
+                        sweetAlert(1, result.message, null);
+                    } else {
+                        sweetAlert(2, result.exception, null);
+                    }
+                } else {
+                    console.log(response);
+                }
+            })
+            .fail(function(jqXHR){
+                // Se muestran en consola los posibles errores de la solicitud AJAX
+                console.log('Error: ' + jqXHR.status + ' ' + jqXHR.statusText);
+            });
+        }
+    });
+}

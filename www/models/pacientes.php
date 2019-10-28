@@ -10,7 +10,8 @@ class Pacientes extends Validator
     private $fecha = null;
     private $foto = null;
     private $peso = null;
-    private $estatura = null;
+	private $estatura = null;
+	private $telefono = null;
     private $idestado = null;
 	private $ruta = null;
 	private $iddoctor = null;
@@ -165,6 +166,21 @@ class Pacientes extends Validator
 		return $this->estatura; 
 	}
 
+	public function setTelefono($value)
+	{
+		if ($this->validatePhoneNumber($value)) {
+			$this->telefono = $value;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function getTelefono()
+	{
+		return $this->telefono;
+	}
+
 	public function setEstado($value)
 	{
 		if ($this->validateId($value)) {
@@ -203,22 +219,15 @@ class Pacientes extends Validator
     //Manejo del CRUD
     public function readPacientes()
 	{
-		$sql = 'SELECT id_paciente, nombre_paciente, apellido_paciente, correo_paciente, usuario_paciente, fecha_nacimiento, foto_paciente, peso_paciente, estatura_paciente, id_estado FROM pacientes ORDER BY apellido_paciente';
+		$sql = 'SELECT id_paciente, nombre_paciente, apellido_paciente, correo_paciente, usuario_paciente, fecha_nacimiento, foto_paciente, peso_paciente, estatura_paciente, telefono_paciente, id_estado FROM pacientes ORDER BY apellido_paciente';
 		$params = array(null);
 		return Database::getRows($sql, $params);
 	}
 
 	public function readPacientesByDoctor()
 	{
-		$sql = 'SELECT c.id_estado, p.id_paciente, p.nombre_paciente, p.apellido_paciente, p.fecha_nacimiento, p.foto_paciente, p.peso_paciente, p.estatura_paciente FROM cita c INNER JOIN pacientes p USING(id_paciente) WHERE c.id_doctor = ? AND c.id_estado = ? GROUP BY p.id_paciente';
-		$params = array($this->iddoctor, 4);
-		return Database::getRows($sql, $params);
-	}
-
-	public function searchPaciente($value)
-	{
-		$sql = 'SELECT id_paciente, nombre_paciente, apellido_paciente, correo_paciente, usuario_paciente FROM pacientes WHERE apellido_paciente LIKE ? OR nombre_paciente LIKE ? ORDER BY apellido_paciente';
-		$params = array("%$value%", "%$value%");
+		$sql  = 'SELECT p.id_paciente, CONCAT(p.nombre_paciente,\' \', p.apellido_paciente) AS Nombre, MAX(fecha_cita) AS UltimaCita, p.fecha_nacimiento, p.peso_paciente, p.estatura_paciente, p.telefono_paciente FROM cita c INNER JOIN pacientes p USING(id_paciente) WHERE c.id_doctor = ? AND c.id_estado = ? GROUP BY p.id_paciente';
+		$params = array($this->iddoctor, 1);
 		return Database::getRows($sql, $params);
 	}
 
@@ -227,6 +236,14 @@ class Pacientes extends Validator
 		$hash = password_hash($this->clave, PASSWORD_DEFAULT);
 		$sql = 'INSERT INTO pacientes(nombre_paciente, apellido_paciente, correo_paciente, usuario_paciente, contrasena_paciente, fecha_nacimiento, foto_paciente, peso_paciente, estatura_paciente, id_estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 		$params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $hash, $this->fecha, $this->foto, $this->peso, $this->estatura, $this->idestado);
+		return Database::executeRow($sql, $params);
+	}
+
+	public function createPacienteApp()
+	{
+		$hash = password_hash($this->clave, PASSWORD_DEFAULT);
+		$sql = 'INSERT INTO pacientes(nombre_paciente, apellido_paciente, correo_paciente, fecha_nacimiento, peso_paciente, estatura_paciente) VALUES(?, ?, ?, ?, ?, ?)';
+		$params = array($this->nombre, $this->apellido, $this->correo, $this->fecha, $this->peso, $this->estatura);
 		return Database::executeRow($sql, $params);
 	}
 

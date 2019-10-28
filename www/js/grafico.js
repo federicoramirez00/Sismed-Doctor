@@ -1,8 +1,8 @@
 $(document).ready(function()
 {
     chartConsultasFecha();
-    chartCitasEstadoDoctor();
-    chartConsultasMensuales();
+    /*chartCitasEstadoDoctor();
+    chartConsultasMensuales();*/
 })
 
 const apiConsultas = 'http://localhost/php/api/consultas.php?action=';
@@ -19,22 +19,19 @@ function chartConsultasFecha() {
         if(isJSONString(response)){
             const result = JSON.parse(response);
             if(result.status){
-                //declaración del arreglo para el eje X
                 let fechas = [];
-                //declaración del arreglo para el eje Y
-                let cantidad = [];
-                result.dataset.forEach(function(row){
-                    //parametros de la base de datos que reciben lo arreglos
-                    fechas.push(row.Hora+':00');
-                    cantidad.push(row.Citas);
-
+                let consultas = [];
+                result.dataset.forEach(function (row) {
+                fechas.push(row.Dia + '/' + row.Mes);
+                consultas.push(row.Consultas);
                 });
                 //determina el tipo de gráfico y los párametros que recibe, id del canva, arreglo para el eje X, arreglo para el eje Y
                 //lectura del dato, y título del gráfico
-                barGraph('chartConsultasFecha', fechas, cantidad, 'Citas', 'Afluencia de citas')
+                barGraph('chartConsultasFecha', fechas, consultas, 'Citas', 'Afluencia de citas mensuales')
                 
             }else{
                 $('#chartConsultasFecha').remove();
+                M.toast({html: result.exception, classes: 'rounded'});
             }
         }else{
             console.log(response);

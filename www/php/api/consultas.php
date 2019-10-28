@@ -8,7 +8,7 @@ if (isset($_GET['action'])) {
     $consultas = new Consultas;
     $result = array('status' => 0, 'message' => null, 'exception' => null);
     //Se verifica si existe una sesión iniciada como administrador para realizar las operaciones correspondientes
-    if (isset($_SESSION['idUsuario']) || true) {
+    if (isset($_GET['idDoctor']) || true) {
         switch ($_GET['action']) {
                 //casos utilizados para la realización de gráficos
                 //caso para mostrar consultas totales de cada mes
@@ -24,6 +24,17 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                 } else {
                     $result['exception'] = 'No hay datos por mostrar';
+                }
+                break;
+            case 'estadisticasCitas':
+                if ($consultas->setIdDoctor($_GET['idDoctor'])) {
+                    if ($result['dataset'] = $consultas->consultasMensuales()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['exception'] = 'No hay estadísticas por mostrar. La gráfica se generará cuando existan estadísticas de este mes.';
+                    }
+                } else {
+                    $result['exception'] = 'No se ha obtenido el doctor';
                 }
                 break;
             default:

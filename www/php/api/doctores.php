@@ -9,7 +9,7 @@ if (isset($_GET['action'])) {
     $doctor = new Doctores;
     $result = array('status' => 0, 'message' => null, 'exception' => null);
     //Se verifica si existe una sesión iniciada como administrador para realizar las operaciones correspondientes
-    if (isset($_SESSION['idDoctor']) || true) {
+    if (isset($_GET['idDoctor'])) {
         switch ($_GET['action']) {
             case 'logout':
                 if (session_destroy()) {

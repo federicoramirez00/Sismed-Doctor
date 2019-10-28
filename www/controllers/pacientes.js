@@ -62,7 +62,7 @@ function fillTable(rows) {
 function showTable() {
     if (localStorage.getItem('id') != null) {
         $.ajax({
-            url: apiPacientes + 'readByDoctor&idDoctor='+localStorage.getItem('id'),
+            url: apiPacientes + 'readByDoctor&idDoctor=' + localStorage.getItem('id'),
             type: 'post',
             data: null,
             datatype: 'json'
@@ -73,7 +73,7 @@ function showTable() {
                     const result = JSON.parse(response);
                     // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
                     if (!result.status) {
-                        M.toast({html: result.exception, classes: 'rounded'});
+                        M.toast({ html: result.exception, classes: 'rounded' });
                         //sweetAlert(4, result.exception, null);
                     }
                     fillTable(result.dataset);
@@ -158,7 +158,7 @@ function showTableAll() {
                     const result = JSON.parse(response);
                     // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
                     if (!result.status) {
-                        M.toast({html: result.exception, classes: 'rounded'});
+                        M.toast({ html: result.exception, classes: 'rounded' });
                         //sweetAlert(4, result.exception, null);
                     }
                     fillTableAll(result.dataset);
@@ -192,19 +192,16 @@ $('#form-create').submit(function () {
             if (isJSONString(response)) {
                 const result = JSON.parse(response);
                 // Se comprueba si el resultado es satisfactorio, sino se muestra la excepción
-                if (result.session) {
-                    if (result.status) {
-                        $('#modal-create').modal('close');
-                        M.toast({html: 'Paciente creado', classes: 'rounded'});
-                        $("#tabla-pacientes").DataTable().destroy();
-                        $('#form-create')[0].reset();
-                        showTable();
-                        
-                    } else {
-                        M.toast({html: result.exception, classes: 'rounded'});
-                    }
+                if (result.status) {
+                    $('#modal-create').modal('close');
+                    M.toast({ html: 'Paciente creado', classes: 'rounded' });
+                    $("#tabla-asignados").DataTable().destroy();
+                    $("#tabla-pacientes").DataTable().destroy();
+                    $('#form-create')[0].reset();
+                    showTable();
+                    showTableAll();
                 } else {
-                    console.log(response);
+                    M.toast({ html: result.exception, classes: 'rounded' });
                 }
             } else {
                 console.log(response);

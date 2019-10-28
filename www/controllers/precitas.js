@@ -25,9 +25,9 @@ function readPreCita() {
                         result.dataset.forEach(function (row) {
                             content += `
                         <div class="card col s12 m6">
-                        <div class="card-image waves-effect waves-block waves-light">
+                        <!--<div class="card-image waves-effect waves-block waves-light">
                             <img class="activator" src="../www/img/fotos/${row.foto_paciente}" id="img-paciente">
-                        </div>
+                        </div>-->
                         <div class="card-action">
                             <span class="card-title activator grey-text text-darken-4">${row.nombre_paciente} ${row.apellido_paciente}<i
                                     class="material-icons right">arrow_drop_up</i></span>
@@ -35,11 +35,11 @@ function readPreCita() {
                             <!--<a href="#" onclick="modalUpdate(${row.id_cita})" class="green-text tooltipped" data-tooltip="Aceptar"><i class="material-icons">check</i></a>
                             <a href="#" onclick="confirmDelete(${row.id_cita})" class="red-text tooltipped" data-tooltip="Cancelar"><i class="material-icons">close</i></a>-->
                             ${
-                                row.id_estado == 1
+                                row.id_estado == 2
                                 ? '<div class="card-action"><a class="green-text tooltipped" onclick="aceptarPreCita(' +row.id_cita +')"><i class="material-icons left">check</i> Aceptar cita</a></div>'
                                 : ""
                                 }
-                            ${row.id_estado == 1
+                            ${row.id_estado == 2
                                     ? '<div class="card-action"><a class="red-text tooltipped" onclick="cancelarCita(' + row.id_cita + ')"><i class="material-icons left">close</i> Rechazar cita</a></div>'
                                     : ""
                                 }
@@ -88,7 +88,7 @@ function readPreCita() {
 function cancelarCita(id) {
     swal({
         title: 'Advertencia',
-        text: 'Está seguro que desea rechazar la cita?',
+        text: '¿Está seguro que desea rechazar la cita?',
         icon: 'warning',
         buttons: ['Cancelar', 'Aceptar'],
         closeOnClickOutside: false,

@@ -233,10 +233,10 @@ class Citas extends Validator
 		return Database::executeRow($sql, $params);
 	}
 
-	public function deleteDoctor()
+	public function deleteCita()
 	{
-		$sql = 'DELETE FROM doctores WHERE id_doctor = ?';
-		$params = array($this->iddoctor);
+		$sql = 'DELETE FROM cita WHERE id_cita = ?';
+		$params = array($this->idcita);
 		return Database::executeRow($sql, $params);
     }
     
@@ -259,13 +259,20 @@ class Citas extends Validator
 	{
 		$sql = 'SELECT COUNT(id_cita) AS citas FROM cita WHERE fecha_cita = CURRENT_DATE AND id_doctor = ?';
 		$params = array($this->iddoctor);
-		return Database::getRow($sql, $params);
+		return Database::getRows($sql, $params);
 	}
 
 	public function readPreCitas()
 	{
-		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 1 ORDER BY fecha_cita DESC';
-		$params = array(null);
+		$sql = 'SELECT id_cita, p.nombre_paciente, p.apellido_paciente, fecha_cita, hora_cita, c.id_estado FROM cita c INNER JOIN pacientes p ON p.id_paciente = c.id_paciente WHERE c.id_estado = 2 AND id_doctor = ? ORDER BY fecha_cita DESC';
+		$params = array($this->iddoctor);
+		return Database::getRows($sql, $params);
+	}
+
+	public function countPreCitas()
+	{
+		$sql = 'SELECT COUNT(id_cita) FROM cita c WHERE c.id_estado = 2 AND id_doctor = ? ORDER BY fecha_cita DESC';
+		$params = array($this->iddoctor);
 		return Database::getRows($sql, $params);
 	}
 
@@ -285,8 +292,15 @@ class Citas extends Validator
 
 	public function getCitaByPaciente()
 	{
-		$sql = 'SELECT cita.id_cita, pacientes.nombre_paciente, pacientes.apellido_paciente, doctores.nombre_doctor, doctores.apellido_doctor, cita.fecha_cita, cita.hora_cita, especialidad.nombre_especialidad, cita.id_estado from cita, doctores, pacientes, especialidad WHERE cita.id_paciente = pacientes.id_paciente AND cita.id_doctor = doctores.id_doctor AND especialidad.id_especialidad = doctores.id_especialidad AND cita.id_paciente = ? ORDER BY cita.fecha_cita';
-		$params = array($this->idpaciente);
+		$sql = 'SELECT c.id_cita, p.nombre_paciente, p.apellido_paciente, c.fecha_cita, c.hora_cita, c.id_estado FROM cita c INNER JOIN doctores d ON c.id_doctor = d.id_doctor INNER JOIN pacientes p ON c.id_paciente = p.id_paciente INNER JOIN estado_cita e ON c.id_estado = e.id_estado WHERE c.id_estado = 2 AND c.id_doctor = ? ORDER BY c.fecha_cita DESC';
+		$params = array($this->iddoctor);
+		return Database::getRows($sql, $params);
+	}
+
+	public function getProximaCita()
+	{
+		$sql = 'SELECT MIN(hora_cita) FROM cita WHERE fecha_cita = CURRENT_DATE AND id_estado = 1 AND id_doctor = ?';
+		$params = array($this->iddoctor);
 		return Database::getRows($sql, $params);
 	}
 }

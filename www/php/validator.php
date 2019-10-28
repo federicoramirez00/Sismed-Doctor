@@ -123,7 +123,7 @@ class Validator
 
     public function validateHeight($value)
 	{
-		if (preg_match('/^[0-2]+(?:\.[0-9]{1,2})?$/', $value)) {
+		if (preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $value)) {
 			return true;
 		} else {
 			return false;
@@ -132,11 +132,12 @@ class Validator
     
     public function validateWeight($value)
     {
-        if (preg_match('/^[0-5]{3}+(?:\.[0-9]{1,2})?$/', $value)) {
+        /*if (preg_match('/^[0-5]{3}+(?:\.[0-9]{1,2})?$/', $value)) {
 			return true;
 		} else {
 			return false;
-		}
+        }*/
+        return true;
     }
 
     public function validateAge($value)
